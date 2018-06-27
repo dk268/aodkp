@@ -1,4 +1,4 @@
-const User = require('./User')
+const User = require("./User");
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -14,5 +14,5 @@ const User = require('./User')
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-  User
-}
+  User,
+};

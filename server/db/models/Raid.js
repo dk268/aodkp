@@ -1,9 +1,9 @@
-const db = require('./database.js')
-const Sequelize = require('sequelize')
+const db = require("./database.js");
+const Sequelize = require("sequelize");
 
-const Raid = db.define('raid', {
+const Raid = db.define("raid", {
   raidName: Sequelize.STRING,
-  raidDate: Sequelize.DATE
-})
+  raidDate: Sequelize.DATE,
+});
 
-module.exports = Raid
+module.exports = Raid;
