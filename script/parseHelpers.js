@@ -3,7 +3,7 @@ const splitThenTrimThenSlice = text => {
     .split(`\n`)
     .map(line => line.trim())
     .filter(line => line.length)
-    .slice(27);
+    .map(line => line.slice(27));
 };
 
 const findRaidStartAndEnd = processedArr => {
@@ -53,25 +53,27 @@ const findCheckpointNames = processedArr => {
 const findItemDrops = processedArr => {
   const output = [];
   const obj = {};
+  let currentCheckpoint = "800";
   for (let i = 0; i < processedArr.length; i++) {
-    let currentCheckpoint = "unassigned";
     if (processedArr[i].includes("BEGIN"))
       currentCheckpoint = processedArr[i].split(" ")[4];
     if (processedArr[i].includes("itemDrop")) {
+      console.log(currentCheckpoint);
       let newLine = processedArr[i]
         .slice(processedArr[i].indexOf("itemDrop") + 9)
         .split(" ");
-      output.push(newLine);
+      output.push(parseItemDrop(newLine, currentCheckpoint));
     }
   }
-  return output.map(drop => parseItemDrop(drop, currentCheckpoint));
+  console.log(output);
+  return output;
 };
 
 const parseItemDrop = (
   arr,
+  checkpointName = "unassigned",
   currStr = "",
-  parsedArr = [],
-  checkpointName = "unassigned"
+  parsedArr = []
 ) => {
   if (arr.length === 0) {
     let obj = {
@@ -83,9 +85,13 @@ const parseItemDrop = (
     return obj;
   } else if (arr[0] !== "to" && !parsedArr.length) {
     let word = currStr + arr[0] + " ";
-    return parseItemDrop(arr.slice(1), word, parsedArr);
+    return parseItemDrop(arr.slice(1), checkpointName, word, parsedArr);
   } else if (arr[0] == "to" && !parsedArr.length) {
-    return parseItemDrop([], "", [currStr.trim(), arr[1], arr[3]]);
+    return parseItemDrop([], checkpointName, "", [
+      currStr.trim(),
+      arr[1],
+      arr[3],
+    ]);
   }
 };
 

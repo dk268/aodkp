@@ -1,4 +1,4 @@
-const db = require("./database.js");
+const db = require("../db");
 const Sequelize = require("sequelize");
 
 const Raid = db.define("raid", {

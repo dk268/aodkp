@@ -1,4 +1,11 @@
-const { db, Item, Raid, Drop, Character, Checkpoint } = require("../db");
+const {
+  Item,
+  Raid,
+  Drop,
+  Character,
+  Checkpoint,
+} = require("../server/db/models");
+const db = require("../server/db");
 const {
   splitThenTrimThenSlice,
   findRaidStartAndEnd,
@@ -8,6 +15,7 @@ const {
 } = require("./parseHelpers");
 const Op = db.Op;
 const chalk = require("chalk");
+const logToParse = require("./parseText");
 
 const parseLog = log => {
   try {
@@ -35,6 +43,7 @@ const formatForConfirmation = log => {
     output["item" + Object.keys(attendance)[i]] = [];
   }
   for (let i = 0; i < items.length; i++) {
+    // console.log("item" + items[i].checkpointName);
     output["item" + items[i].checkpointName] = [
       ...output["item" + items[i].checkpointName],
       {
@@ -46,3 +55,7 @@ const formatForConfirmation = log => {
   }
   return output;
 };
+
+const createString = parsedLog => {};
+
+console.log(formatForConfirmation(logToParse));
