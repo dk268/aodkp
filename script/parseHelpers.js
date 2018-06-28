@@ -58,14 +58,12 @@ const findItemDrops = processedArr => {
     if (processedArr[i].includes("BEGIN"))
       currentCheckpoint = processedArr[i].split(" ")[4];
     if (processedArr[i].includes("itemDrop")) {
-      console.log(currentCheckpoint);
       let newLine = processedArr[i]
         .slice(processedArr[i].indexOf("itemDrop") + 9)
         .split(" ");
       output.push(parseItemDrop(newLine, currentCheckpoint));
     }
   }
-  console.log(output);
   return output;
 };
 
