@@ -16,6 +16,7 @@ const {
 const Op = db.Op;
 const chalk = require("chalk");
 const logToParse = require("./parseText");
+const { createCheckpointsWithRaid } = require("./parseWriteHelpers");
 
 const parseLog = log => {
   try {
@@ -58,31 +59,43 @@ const formatForConfirmation = log => {
   return output;
 };
 
-const createString = parsedLog => {
+const writeToDatabase = async raidObj => {
+  const raidAttendanceArray = [];
+  const checkpointNames = Object.keys(raidObj).filter(
+    key => key !== `raidName`
+  );
+  const newRaid = await Raid.create({ raidName });
+  let newCheckpoints = await createCheckpointsWithRaid(
+    checkpointNames,
+    newRaid
+  );
+};
+
+const createString = raidObj => {
   let output = "";
-  console.log(parsedLog[Object.keys(parsedLog)[0]].attendance.length);
-  for (let i = 0; i < Object.keys(parsedLog).length - 1; i++) {
+  console.log(raidObj[Object.keys(raidObj)[0]].attendance.length);
+  for (let i = 0; i < Object.keys(raidObj).length - 1; i++) {
     let charList = "";
     for (
       let j = 0, k = 0;
-      j < parsedLog[Object.keys(parsedLog)[i]].attendance.sort().length;
+      j < raidObj[Object.keys(raidObj)[i]].attendance.sort().length;
       j++, k++
     ) {
-      charList += parsedLog[Object.keys(parsedLog)[i]].attendance[j] + " ";
+      charList += raidObj[Object.keys(raidObj)[i]].attendance[j] + " ";
       if (k >= 9) {
         charList += "\n";
         k = 0;
       }
     }
-    output += `\nFor checkpoint ${Object.keys(parsedLog)[i]}, the following ${
-      parsedLog[Object.keys(parsedLog)[i]].attendance.length
+    output += `\nFor checkpoint ${Object.keys(raidObj)[i]}, the following ${
+      raidObj[Object.keys(raidObj)[i]].attendance.length
     } characters were present: \n`;
     output += charList;
-    output += !parsedLog[Object.keys(parsedLog)[i]].items.length
+    output += !raidObj[Object.keys(raidObj)[i]].items.length
       ? `and no items dropped`
       : `\n...and the following ${
-          parsedLog[Object.keys(parsedLog)[i]].items.length
-        } items dropped: ${parsedLog[Object.keys(parsedLog)[i]].items
+          raidObj[Object.keys(raidObj)[i]].items.length
+        } items dropped: ${raidObj[Object.keys(raidObj)[i]].items
           .map(
             item =>
               `\nitem name: ${item.itemName}; went to ${
