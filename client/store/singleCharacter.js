@@ -1,10 +1,11 @@
 import Axios from "axios";
 import { LOADING, LOADED, ERROR, UNASKED, aF } from ".";
 
-const DIRECT_OBJECT = "CHARACTER";
+const DIRECT_OBJECT = `CHARACTER`;
 const LOADING_CHARACTER = `LOADING_` + DIRECT_OBJECT;
 const LOADED_CHARACTER = `LOADED_` + DIRECT_OBJECT;
 const ERROR_CHARACTER = `ERROR_` + DIRECT_OBJECT;
+const EDIT_CHARACTER = `EDIT_CHARACTER`;
 
 export const getSingleCharacter = id => async dispatch => {
   try {

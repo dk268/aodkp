@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Login, Signup, UserHome } from "./components";
+import { Login, Signup, UserHome, Landing } from "./components";
 import { me } from "./store";
 
 /**
@@ -21,14 +21,31 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        {isLoggedIn && (
+        <Route exact path="/" component={Landing} />
+        {/* <Route exact path="/characters" component={AllCharacters} /> */}
+        {/* <Route exact path="/items" component={AllItems} /> */}
+        {/* <Route exact path="/raids" component={AllRaids} /> */}
+        {/* <Route exact path="/checkpoints" component={AllCheckpoints} /> */}
+        {/* <Route
+          exact
+          path="/characters/:characterId"
+          component={SingleCharacter}
+        /> */}
+        {/* <Route exact path="/items/:itemId" component={SingleItem} /> */}
+        {/* <Route exact path="/raids/:raidId" component={SingleRaid} /> */}
+        {/* <Route
+          exact
+          path="/checkpoints/:checkpointId"
+          component={SingleCheckpoint}
+        /> */}
+        {/*isLoggedIn && (
           <Switch>
-            {/* Routes placed here are only available after logging in */}
+            {/* Routes placed here are only available after logging in }
             <Route path="/home" component={UserHome} />
           </Switch>
-        )}
+    )*/}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        {/* <Route component={Login} /> */}
       </Switch>
     );
   }

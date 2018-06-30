@@ -1,10 +1,11 @@
 import Axios from "axios";
 import { LOADING, LOADED, ERROR, UNASKED, aF } from ".";
 
-const DIRECT_OBJECT = "RAID";
+const DIRECT_OBJECT = `RAID`;
 const LOADING_RAID = `LOADING_` + DIRECT_OBJECT;
 const LOADED_RAID = `LOADED_` + DIRECT_OBJECT;
 const ERROR_RAID = `ERROR_` + DIRECT_OBJECT;
+const EDIT_RAID = `EDIT_RAID`;
 
 export const getSingleRaid = id => async dispatch => {
   try {

@@ -1,10 +1,12 @@
 import Axios from "axios";
 import { LOADING, LOADED, ERROR, UNASKED, aF } from ".";
 
-const DIRECT_OBJECT = "ITEMS";
+const DIRECT_OBJECT = `ITEMS`;
 const LOADING_ITEMS = `LOADING_` + DIRECT_OBJECT;
 const LOADED_ITEMS = `LOADED_` + DIRECT_OBJECT;
 const ERROR_ITEMS = `ERROR_` + DIRECT_OBJECT;
+const ADD_ITEM = `ADD_ITEM`;
+const DELETE_ITEM = `DELETE_ITEM`;
 
 export const getItems = () => async dispatch => {
   try {

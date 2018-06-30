@@ -43,6 +43,7 @@ const rootReducer = combineReducers({
   allRaids,
   allCheckpoints,
   auth,
+  user,
   singleCharacter,
   singleItem,
   singleRaid,

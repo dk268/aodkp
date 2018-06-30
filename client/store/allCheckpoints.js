@@ -1,10 +1,12 @@
 import Axios from "axios";
 import { LOADING, LOADED, ERROR, UNASKED, aF } from ".";
 
-const DIRECT_OBJECT = "CHECKPOINTS";
+const DIRECT_OBJECT = `CHECKPOINTS`;
 const LOADING_CHECKPOINTS = `LOADING_` + DIRECT_OBJECT;
 const LOADED_CHECKPOINTS = `LOADED_` + DIRECT_OBJECT;
 const ERROR_CHECKPOINTS = `ERROR_` + DIRECT_OBJECT;
+const ADD_CHECKPOINT = `ADD_CHECKPOINT`;
+const DELETE_CHECKPOINT = `DELETE_CHECKPOINT`;
 
 export const getCheckpoints = () => async dispatch => {
   try {
