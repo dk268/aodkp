@@ -16,7 +16,12 @@ const {
 const Op = db.Op;
 const chalk = require("chalk");
 const logToParse = require("./parseText");
-const { createCheckpointsWithRaid } = require("./parseWriteHelpers");
+const {
+  createCheckpointsWithRaid,
+  constructAttendanceFromCheckpoints,
+  writeAttendanceToCheckpoints,
+  writeItemsToCheckpointsAndCharacters,
+} = require("./parseWriteHelpers");
 
 const parseLog = log => {
   try {
@@ -60,20 +65,55 @@ const formatForConfirmation = log => {
 };
 
 const writeToDatabase = async raidObj => {
-  const raidAttendanceArray = [];
-  const checkpointNames = Object.keys(raidObj).filter(
-    key => key !== `raidName`
-  );
-  const newRaid = await Raid.create({ raidName });
-  let newCheckpoints = await createCheckpointsWithRaid(
-    checkpointNames,
-    newRaid
-  );
+  await db.sync({ force: true });
+  try {
+    let now = Date.now();
+    console.log(chalk.bold("Starting write..."));
+    console.log(chalk.red(`creating checkpoints and raid...`));
+    const checkpointNames = Object.keys(raidObj).filter(
+      key => key !== `raidName`
+    );
+    const newRaid = await Raid.create({ raidName: raidObj.raidName });
+    let newCheckpoints = await createCheckpointsWithRaid(
+      checkpointNames,
+      newRaid
+    );
+    console.log(
+      chalk.blue(
+        `created ${newCheckpoints.length} checkpoints for raid ${
+          newRaid.raidName
+        }!`
+      )
+    );
+    console.log(chalk.yellow(`beginning attendance-taking...`));
+    const raidAttendanceArray = await constructAttendanceFromCheckpoints(
+      checkpointNames,
+      raidObj
+    );
+    newCheckpoints = await writeAttendanceToCheckpoints(
+      newCheckpoints,
+      newRaid,
+      raidObj
+    );
+    console.log(
+      chalk.blue(
+        `Attendance taken for ${raidAttendanceArray.length} characters across ${
+          newCheckpoints.length
+        } checkpoints!`
+      )
+    );
+    console.log(
+      chalk.red.bold(`Beginning item writing and DKP expenditures...`)
+    );
+    await writeItemsToCheckpointsAndCharacters(newCheckpoints, raidObj);
+    console.log(chalk.magenta(`All done in ${Date.now() - now}ms!!`));
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const createString = raidObj => {
   let output = "";
-  console.log(raidObj[Object.keys(raidObj)[0]].attendance.length);
   for (let i = 0; i < Object.keys(raidObj).length - 1; i++) {
     let charList = "";
     for (
@@ -108,4 +148,6 @@ const createString = raidObj => {
 };
 
 // console.log(formatForConfirmation(logToParse));
-console.log(createString(formatForConfirmation(logToParse)));
+// console.log(createString(formatForConfirmation(logToParse)));
+
+writeToDatabase(formatForConfirmation(logToParse));

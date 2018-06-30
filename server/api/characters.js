@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { Character, Checkpoint, Item, Raid } = require("../db/models");
 
 const NOUN = "character";
-const OTHER_MODELS = [Character, Checkpoint, Item, Raid].filter(
+const OTHER_MODELS = [Character, Checkpoint, Item].filter(
   model => model !== Character
 );
 
@@ -20,8 +20,12 @@ router.get(`/`, async (req, res, next) => {
 
 router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
+    console.log(`${NOUN}Id`, req.body.id);
+    console.log(req.body[`${NOUN}Id`]);
     res.json(
-      await Character.findById(req.body[`${NOUN}Id`], { include: OTHER_MODELS })
+      await Character.findById(req.params[`${NOUN}Id`], {
+        include: OTHER_MODELS,
+      })
     );
   } catch (e) {
     next(e);

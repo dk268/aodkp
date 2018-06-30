@@ -21,7 +21,7 @@ router.get(`/`, async (req, res, next) => {
 router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
-      await Checkpoint.findById(req.body[`${NOUN}Id`], {
+      await Checkpoint.findById(req.params[`${NOUN}Id`], {
         include: OTHER_MODELS,
       })
     );
