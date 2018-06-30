@@ -9,9 +9,7 @@ const OTHER_MODELS = [Character, Checkpoint, Item, Raid].filter(
 router.get(`/`, async (req, res, next) => {
   try {
     res.json(
-      await Checkpoint.findAll({
-        include: OTHER_MODELS,
-      })
+      await Checkpoint.findAll({ include: [{ all: true, nested: true }] })
     );
   } catch (e) {
     next(e);
@@ -22,7 +20,7 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
       await Checkpoint.findById(req.params[`${NOUN}Id`], {
-        include: OTHER_MODELS,
+        include: [{ all: true, nested: true }],
       })
     );
   } catch (e) {

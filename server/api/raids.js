@@ -6,11 +6,7 @@ const OTHER_MODELS = [Checkpoint, Raid].filter(model => model !== Raid);
 
 router.get(`/`, async (req, res, next) => {
   try {
-    res.json(
-      await Raid.findAll({
-        include: OTHER_MODELS,
-      })
-    );
+    res.json(await Raid.findAll({ include: [{ all: true, nested: true }] }));
   } catch (e) {
     next(e);
   }
@@ -19,7 +15,9 @@ router.get(`/`, async (req, res, next) => {
 router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
-      await Raid.findById(req.params[`${NOUN}Id`], { include: OTHER_MODELS })
+      await Raid.findById(req.params[`${NOUN}Id`], {
+        include: [{ all: true, nested: true }],
+      })
     );
   } catch (e) {
     next(e);
