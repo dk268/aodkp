@@ -22,13 +22,17 @@ const createCheckpointsWithRaid = async (names, raid) => {
 
 const constructAttendanceFromCheckpoints = async (checkpointArray, raidObj) => {
   let output = [];
-  checkpointArray.forEach(cp => output.push(...raidObj[cp].attendance));
-  output = await Promise.all(
-    output.map(characterName =>
-      Character.findOrCreate({ where: { characterName } })
-    )
-  );
-  await Promise.all(output.map(character => character[0].earnDKP(10)));
+  for (let i = 0; i < checkpointArray.length; i++) {
+    let checkpointAttendance = await Promise.all(
+      raidObj[checkpointArray[i]].attendance.map(characterName =>
+        Character.findOrCreate({ where: { characterName } })
+      )
+    );
+    await Promise.all(
+      checkpointAttendance.map(character => character[0].earnDKP(10))
+    );
+    output.push(...checkpointAttendance);
+  }
   output = [...new Set(output.map(character => character[0].characterName))];
   return output;
 };
@@ -67,8 +71,8 @@ const writeItemsToCheckpointsAndCharacters = async (checkpoints, raidObj) => {
         where: { characterName: currItems[j].characterName },
       });
       await character.spendDKP(currItems[j].itemDKPCost);
+      await character.addItem(newItems[j]);
       let [[newDrop]] = await checkpoints[i].addItem(newItems[j]);
-      console.log(newDrop);
       await newDrop.update({ characterId: character.id });
     }
   }
