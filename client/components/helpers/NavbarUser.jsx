@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button";
 
 const styles = {
   root: {
-    // flexGrow: 1
+    // flexGrow: 1,
   },
   flex: {
     flex: 1,
@@ -26,11 +26,10 @@ const styles = {
 const NavbarUser = props => {
   const { handleClick, classes, isLoggedIn } = props;
   return (
-    <div className={classes.root}>
+    <Fragment>
       <Button color="inherit" component={Link} to="/raids">
         Characters
       </Button>
-
       <Button color="inherit" component={Link} to="/raids">
         Items
       </Button>
@@ -38,22 +37,22 @@ const NavbarUser = props => {
         Raids
       </Button>
       {isLoggedIn ? (
-        <div>
-          <Button color="inherit" onClick={handleClick}>
-            Log Out
-          </Button>
-        </div>
+        // <div>
+        <Button color="inherit" onClick={handleClick}>
+          Log Out
+        </Button>
       ) : (
-        <div>
+        // </div>
+        <Fragment>
           <Button component={Link} to="/login" color="inherit">
             Login
           </Button>
           <Button color="inherit" component={Link} to="/signup">
             Sign Up
           </Button>
-        </div>
+        </Fragment>
       )}
-    </div>
+    </Fragment>
   );
 };
 

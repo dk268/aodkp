@@ -30,13 +30,18 @@ const Navbar = props => {
     <div className={classes.root}>
       <AppBar position="static" id="navbar">
         <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.flex}>
-            <Link to="/" className="navbar-link">
-              Home
-            </Link>
+          <Typography
+            variant="title"
+            color="inherit"
+            className={classes.flex}
+            component={Link}
+            to="/">
+            Home
+          </Typography>
+          <div>
             {isAdmin ? <NavbarAdmin {...props} /> : ""}
             <NavbarUser {...props} />
-          </Typography>
+          </div>
         </Toolbar>
       </AppBar>
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -26,10 +26,7 @@ const styles = {
 const NavbarAdmin = props => {
   const { handleClick, classes, isLoggedIn } = props;
   return (
-    <div className={classes.root}>
-      <Button component={Link} to="/checkpoints" color="inherit">
-        Checkpoints
-      </Button>
+    <Fragment>
       <Button color="inherit" component={Link} to="/characters/add">
         Add a Character
       </Button>
@@ -42,7 +39,10 @@ const NavbarAdmin = props => {
       <Button component={Link} to="/raids/add" color="inherit">
         Add a Raid
       </Button>
-    </div>
+      <Button component={Link} to="/checkpoints" color="inherit">
+        Checkpoints
+      </Button>
+    </Fragment>
   );
 };
 
