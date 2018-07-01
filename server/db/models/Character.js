@@ -20,6 +20,11 @@ const Character = db.define("character", {
   },
 });
 
+Character.afterUpdate = function(instance, options) {
+  if (instance.dkp > 800) instance.dkp = 800;
+  if (instance.dkp > 120 && instance.isAlt) instance.dkp = 120;
+};
+
 Character.prototype.spendDKP = async function(num) {
   this.dkp = this.dkp - num;
   await this.save();

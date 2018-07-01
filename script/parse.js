@@ -1,10 +1,4 @@
-const {
-  Item,
-  Raid,
-  Drop,
-  Character,
-  Checkpoint,
-} = require("../server/db/models");
+const { Item, Raid, Drop, Character, Checkpoint } = require("../server/db/models");
 const db = require("../server/db");
 const {
   splitThenTrimThenSlice,
@@ -12,6 +6,8 @@ const {
   renderAttendance,
   findCheckpointNames,
   findItemDrops,
+  parseDropDoc,
+  parseAttendanceDoc,
 } = require("./parseHelpers");
 const Op = db.Op;
 const chalk = require("chalk");
@@ -22,19 +18,17 @@ const {
   writeAttendanceToCheckpoints,
   writeItemsToCheckpointsAndCharacters,
 } = require("./parseWriteHelpers");
+const aoDoc = require("./aoDoc.js");
+const parseAODoc = require("./aoParse.js");
 
 const parseLog = log => {
   try {
     const processedArray = splitThenTrimThenSlice(log);
-    const [startIndex, endIndex, raidName] = findRaidStartAndEnd(
-      processedArray
-    );
+    const [startIndex, endIndex, raidName] = findRaidStartAndEnd(processedArray);
     const slicedArray = processedArray.slice(startIndex, endIndex);
     let checkpointNames = findCheckpointNames(slicedArray);
     const attendance = {};
-    checkpointNames.forEach(
-      name => (attendance[name] = renderAttendance(slicedArray, name))
-    );
+    checkpointNames.forEach(name => (attendance[name] = renderAttendance(slicedArray, name)));
     let items = findItemDrops(slicedArray);
     return [raidName, attendance, items];
   } catch (e) {
@@ -66,35 +60,20 @@ const formatForConfirmation = log => {
 
 const writeToDatabase = async raidObj => {
   await db.sync({ force: true });
+  // console.log(raidObj[`<2200>`].attendance);
   try {
     let now = Date.now();
     console.log(chalk.bold("Starting write..."));
     console.log(chalk.red(`creating checkpoints and raid...`));
-    const checkpointNames = Object.keys(raidObj).filter(
-      key => key !== `raidName`
-    );
+    const checkpointNames = Object.keys(raidObj).filter(key => key !== `raidName`);
     const newRaid = await Raid.create({ raidName: raidObj.raidName });
-    let newCheckpoints = await createCheckpointsWithRaid(
-      checkpointNames,
-      newRaid
-    );
+    let newCheckpoints = await createCheckpointsWithRaid(checkpointNames, newRaid);
     console.log(
-      chalk.blue(
-        `created ${newCheckpoints.length} checkpoints for raid ${
-          newRaid.raidName
-        }!`
-      )
+      chalk.blue(`created ${newCheckpoints.length} checkpoints for raid ${newRaid.raidName}!`)
     );
     console.log(chalk.yellow(`beginning attendance-taking...`));
-    const raidAttendanceArray = await constructAttendanceFromCheckpoints(
-      checkpointNames,
-      raidObj
-    );
-    newCheckpoints = await writeAttendanceToCheckpoints(
-      newCheckpoints,
-      newRaid,
-      raidObj
-    );
+    const raidAttendanceArray = await constructAttendanceFromCheckpoints(checkpointNames, raidObj);
+    newCheckpoints = await writeAttendanceToCheckpoints(newCheckpoints, newRaid, raidObj);
     console.log(
       chalk.blue(
         `Attendance taken for ${raidAttendanceArray.length} characters across ${
@@ -102,9 +81,7 @@ const writeToDatabase = async raidObj => {
         } checkpoints!`
       )
     );
-    console.log(
-      chalk.red.bold(`Beginning item writing and DKP expenditures...`)
-    );
+    console.log(chalk.red.bold(`Beginning item writing and DKP expenditures...`));
     await writeItemsToCheckpointsAndCharacters(newCheckpoints, raidObj);
     console.log(chalk.magenta(`All done in ${Date.now() - now}ms!!`));
   } catch (e) {
@@ -138,9 +115,9 @@ const createString = raidObj => {
         } items dropped: ${raidObj[Object.keys(raidObj)[i]].items
           .map(
             item =>
-              `\nitem name: ${item.itemName}; went to ${
-                item.characterName
-              } for ${item.itemDKPCost} DKP`
+              `\nitem name: ${item.itemName}; went to ${item.characterName} for ${
+                item.itemDKPCost
+              } DKP`
           )
           .join("; and,")}.\n\n`;
   }
@@ -150,4 +127,7 @@ const createString = raidObj => {
 // console.log(formatForConfirmation(logToParse));
 // console.log(createString(formatForConfirmation(logToParse)));
 
-writeToDatabase(formatForConfirmation(logToParse));
+// writeToDatabase(formatForConfirmation(logToParse));
+// console.log(parseAODoc(aoDoc));
+writeToDatabase(parseAODoc(aoDoc));
+// console.log(formatForConfirmation(logToParse));
