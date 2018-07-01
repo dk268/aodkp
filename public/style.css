@@ -19,3 +19,12 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#character-expansion-panel-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bolded {
+  font-weight: bold;
+}

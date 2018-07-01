@@ -18,6 +18,18 @@ const Character = db.define("character", {
     type: Sequelize.STRING,
     defaultValue: null,
   },
+  totalDKPSpent: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+  },
+  totalDKPEarned: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+  },
+  overflowDKP: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+  },
 });
 
 Character.afterUpdate = function(instance, options) {
@@ -27,11 +39,13 @@ Character.afterUpdate = function(instance, options) {
 
 Character.prototype.spendDKP = async function(num) {
   this.dkp = this.dkp - num;
+  this.totalDKPSpent = this.totalDKPSpent + num;
   await this.save();
 };
 
 Character.prototype.earnDKP = async function(num) {
   this.dkp = this.dkp + num;
+  this.totalDKPEarned = this.totalDKPEarned + num;
   await this.save();
 };
 

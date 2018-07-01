@@ -4,6 +4,7 @@ import { withRouter, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Login, Signup, UserHome, Landing } from "./components";
 import { me } from "./store";
+import AllCharacters from "./components/AllCharacters";
 
 /**
  * COMPONENT
@@ -22,7 +23,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/" component={Landing} />
-        {/* <Route exact path="/characters" component={AllCharacters} /> */}
+        <Route exact path="/characters" component={AllCharacters} />
         {/* <Route exact path="/items" component={AllItems} /> */}
         {/* <Route exact path="/raids" component={AllRaids} /> */}
         {/* <Route exact path="/checkpoints" component={AllCheckpoints} /> */}

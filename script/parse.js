@@ -126,5 +126,5 @@ const createString = raidObj => {
 
 // writeToDatabase(formatForConfirmation(logToParse));
 // console.log(parseAODoc(aoDoc));
-// writeToDatabase(parseAODoc(aoDoc));
+writeToDatabase(parseAODoc(aoDoc));
 // console.log(formatForConfirmation(logToParse));

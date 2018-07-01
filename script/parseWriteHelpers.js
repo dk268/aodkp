@@ -56,7 +56,6 @@ const writeItemsToCheckpointsAndCharacters = async (checkpoints, raidObj) => {
   try {
     for (let i = 0; i < checkpoints.length; i++) {
       let currItems = raidObj[checkpoints[i].checkpointName].items;
-      console.log(currItems, ++counter);
       let newItems = Array.prototype.map.call(
         await Promise.all(
           currItems.map(item => Item.findOrCreate({ where: { itemName: item.itemName } }))
@@ -64,7 +63,6 @@ const writeItemsToCheckpointsAndCharacters = async (checkpoints, raidObj) => {
         arr => arr[0]
       );
       for (let j = 0; j < newItems.length; j++) {
-        console.log(currItems[j].characterName, ++counter);
         let character = await Character.findOrCreate({
           where: { characterName: currItems[j].characterName },
         });
