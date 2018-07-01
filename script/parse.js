@@ -60,7 +60,6 @@ const formatForConfirmation = log => {
 
 const writeToDatabase = async raidObj => {
   await db.sync({ force: true });
-  // console.log(raidObj[`<2200>`].attendance);
   try {
     let now = Date.now();
     console.log(chalk.bold("Starting write..."));
@@ -91,28 +90,25 @@ const writeToDatabase = async raidObj => {
 
 const createString = raidObj => {
   let output = "";
-  for (let i = 0; i < Object.keys(raidObj).length - 1; i++) {
+  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
+  for (let i = 0; i < cpNames.length - 1; i++) {
     let charList = "";
-    for (
-      let j = 0, k = 0;
-      j < raidObj[Object.keys(raidObj)[i]].attendance.sort().length;
-      j++, k++
-    ) {
-      charList += raidObj[Object.keys(raidObj)[i]].attendance[j] + " ";
+    for (let j = 0, k = 0; j < raidObj[cpNames[i]].attendance.sort().length; j++, k++) {
+      charList += raidObj[cpNames[i]].attendance[j] + " ";
       if (k >= 9) {
         charList += "\n";
         k = 0;
       }
     }
-    output += `\nFor checkpoint ${Object.keys(raidObj)[i]}, the following ${
-      raidObj[Object.keys(raidObj)[i]].attendance.length
+    output += `\nFor checkpoint ${cpNames[i]}, the following ${
+      raidObj[cpNames[i]].attendance.length
     } characters were present: \n`;
     output += charList;
-    output += !raidObj[Object.keys(raidObj)[i]].items.length
+    output += !raidObj[cpNames[i]].items.length
       ? `and no items dropped`
-      : `\n...and the following ${
-          raidObj[Object.keys(raidObj)[i]].items.length
-        } items dropped: ${raidObj[Object.keys(raidObj)[i]].items
+      : `\n...and the following ${raidObj[cpNames[i]].items.length} items dropped: ${raidObj[
+          cpNames[i]
+        ].items
           .map(
             item =>
               `\nitem name: ${item.itemName}; went to ${item.characterName} for ${
@@ -126,8 +122,9 @@ const createString = raidObj => {
 
 // console.log(formatForConfirmation(logToParse));
 // console.log(createString(formatForConfirmation(logToParse)));
+// console.log(createString(parseAODoc(aoDoc)));
 
 // writeToDatabase(formatForConfirmation(logToParse));
 // console.log(parseAODoc(aoDoc));
-writeToDatabase(parseAODoc(aoDoc));
+// writeToDatabase(parseAODoc(aoDoc));
 // console.log(formatForConfirmation(logToParse));
