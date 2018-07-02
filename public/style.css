@@ -28,3 +28,14 @@ form div {
 .bolded {
   font-weight: bold;
 }
+
+.chart {
+  width: 99%;
+  margin: 0 auto;
+  background-color: gray;
+}
+
+.gray-bg {
+  width: 99%;
+  background-color: lightgray;
+}

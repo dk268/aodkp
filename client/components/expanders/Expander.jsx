@@ -1,12 +1,13 @@
 import React from "react";
 import CharacterExpander from "./CharacterExpander";
+import CheckpointExpander from "./CheckpointExpander";
 
 const Expander = props => {
   switch (props.modelName) {
     case "Character":
       return <CharacterExpander {...props} />;
     case "Checkpoint":
-      return "checkpoint";
+      return <CheckpointExpander {...props} />;
     case "Item":
       return "item";
     case "Raid":

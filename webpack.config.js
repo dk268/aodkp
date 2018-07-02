@@ -12,12 +12,12 @@ module.exports = {
     path: __dirname,
     filename: "./public/bundle.js",
   },
-  optimization: {
-    removeAvailableModules: false,
-    removeEmptyChunks: false,
-    splitChunks: false,
-  },
-  plugins: [new HardSourceWebpackPlugin()],
+  // optimization: {
+  //   removeAvailableModules: false,
+  //   removeEmptyChunks: false,
+  //   splitChunks: false,
+  // },
+  // plugins: [new HardSourceWebpackPlugin()],
   resolve: {
     extensions: [".js", ".jsx"],
   },

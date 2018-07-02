@@ -27,10 +27,10 @@ const NavbarUser = props => {
   const { handleClick, classes, isLoggedIn } = props;
   return (
     <Fragment>
-      <Button color="inherit" component={Link} to="/raids">
+      <Button color="inherit" component={Link} to="/characters">
         Characters
       </Button>
-      <Button color="inherit" component={Link} to="/raids">
+      <Button color="inherit" component={Link} to="/items">
         Items
       </Button>
       <Button component={Link} to="/raids" color="inherit">

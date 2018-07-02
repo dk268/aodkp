@@ -24,6 +24,10 @@ const styles = theme => ({
     justifyContent: `space-around`,
     maxWidth: `70%`,
   },
+  expanderLink: {
+    color: `darkblue`,
+    "&:hover": { color: `green` },
+  },
   bolded: {
     fontWeight: `bold`,
   },
@@ -34,9 +38,9 @@ const CharacterExpander = props => {
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        <div className={classes.whiteCard} id="FINDME">
+        <div className={classes.whiteCard}>
           <Typography
-            className={classes.heading}
+            className={`${classes.heading} ${classes.expanderLink}`}
             component={Link}
             to={`/characters/${character.id}`}>
             {character.characterName}

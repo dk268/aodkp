@@ -14,18 +14,9 @@ import LinearIndeterminate from "./loaders/LinearIndeterminate";
 import { Paper } from "@material-ui/core";
 
 const styles = theme => ({
-  grayBG: {
-    width: "100%",
-    backgroundColor: `lightgray`,
-  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
-  },
-  chart: {
-    width: `99%`,
-    margin: `0 auto`,
-    backgroundColor: `white`,
   },
 });
 
@@ -43,8 +34,8 @@ class AllCharacters extends Component {
         return <h1> DOOM </h1>;
       case LOADED:
         return (
-          <Paper className={classes.grayBG}>
-            <div className={classes.chart}>
+          <Paper>
+            <div className="chart gray-bg">
               {allCharacters.map(character => {
                 return (
                   <Expander

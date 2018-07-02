@@ -5,10 +5,22 @@ import PropTypes from "prop-types";
 import { Login, Signup, UserHome, Landing } from "./components";
 import { me } from "./store";
 import AllCharacters from "./components/AllCharacters";
+import AllCheckpoints from "./components/AllCheckpoints";
+import { withStyles } from "@material-ui/core";
 
 /**
  * COMPONENT
  */
+
+const newStyles = {
+  whiteCard: {},
+  chart: {},
+  grayBG: {},
+  typographies: {},
+  expanderLink: {},
+  bolded: {},
+};
+
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
@@ -26,7 +38,7 @@ class Routes extends Component {
         <Route exact path="/characters" component={AllCharacters} />
         {/* <Route exact path="/items" component={AllItems} /> */}
         {/* <Route exact path="/raids" component={AllRaids} /> */}
-        {/* <Route exact path="/checkpoints" component={AllCheckpoints} /> */}
+        <Route exact path="/checkpoints" component={AllCheckpoints} />
         {/* <Route
           exact
           path="/characters/:characterId"
@@ -73,7 +85,8 @@ const mapDispatch = dispatch => {
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Routes));
+
+export default withStyles(newStyles)(withRouter(connect(mapState, mapDispatch)(Routes)));
 
 /**
  * PROP TYPES
