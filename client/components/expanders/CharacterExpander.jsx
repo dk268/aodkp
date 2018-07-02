@@ -9,9 +9,11 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const styles = theme => ({
-  root: {
+  whiteCard: {
     display: `flex`,
-    justifyContent: `space-between`,
+    justifyContent: "space-between",
+    backgroundColor: `white`,
+    width: `100%`,
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -32,7 +34,7 @@ const CharacterExpander = props => {
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        <div className={classes.root}>
+        <div className={classes.whiteCard} id="FINDME">
           <Typography
             className={classes.heading}
             component={Link}

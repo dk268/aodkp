@@ -8,9 +8,14 @@ module.exports = {
     "./client/index.js",
   ],
   output: {
+    pathinfo: false,
     path: __dirname,
     filename: "./public/bundle.js",
-    pathinfo: false,
+  },
+  optimization: {
+    removeAvailableModules: false,
+    removeEmptyChunks: false,
+    splitChunks: false,
   },
   plugins: [new HardSourceWebpackPlugin()],
   resolve: {

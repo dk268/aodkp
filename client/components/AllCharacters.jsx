@@ -14,13 +14,18 @@ import LinearIndeterminate from "./loaders/LinearIndeterminate";
 import { Paper } from "@material-ui/core";
 
 const styles = theme => ({
-  root: {
+  grayBG: {
     width: "100%",
     backgroundColor: `lightgray`,
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
+  },
+  chart: {
+    width: `99%`,
+    margin: `0 auto`,
+    backgroundColor: `white`,
   },
 });
 
@@ -33,13 +38,13 @@ class AllCharacters extends Component {
     const { classes, allCharacters } = this.props;
     switch (this.props.status) {
       case LOADING:
-        return <LinearIndeterminate className={classes.root} />;
+        return <LinearIndeterminate />;
       case ERROR:
         return <h1> DOOM </h1>;
       case LOADED:
         return (
-          <Paper className={classes.root}>
-            <div>
+          <Paper className={classes.grayBG}>
+            <div className={classes.chart}>
               {allCharacters.map(character => {
                 return (
                   <Expander
