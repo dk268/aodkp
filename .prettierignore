@@ -2,3 +2,5 @@ public/bundle.js
 public/bundle.js.map
 package-lock.json
 package.json
+dist/main.js
+dist/main.js.map
