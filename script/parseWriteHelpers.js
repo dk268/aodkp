@@ -56,22 +56,38 @@ const writeItemsToCheckpointsAndCharacters = async (checkpoints, raidObj) => {
   try {
     for (let i = 0; i < checkpoints.length; i++) {
       let currItems = raidObj[checkpoints[i].checkpointName].items;
-      let newItems = Array.prototype.map.call(
-        await Promise.all(
-          currItems.map(item => Item.findOrCreate({ where: { itemName: item.itemName } }))
+
+      for (let j = 0; j < currItems.length; j++) {
+        await Item.findOrCreate({ where: { itemName: currItems[j].itemName } });
+      }
+
+      const [newItems, newDrops] = await Promise.all([
+        Array.prototype.map.call(
+          await Promise.all(
+            currItems.map(item => Item.findOrCreate({ where: { itemName: item.itemName } }))
+          ),
+          arr => arr[0]
         ),
-        arr => arr[0]
-      );
-      for (let j = 0; j < newItems.length; j++) {
+        await Promise.all(
+          currItems.map(item =>
+            Drop.create({ dropName: item.itemName, dropDKPCost: item.itemDKPCost })
+          )
+        ),
+      ]);
+
+      for (let j = 0; j < newDrops.length; j++) {
         let character = await Character.findOrCreate({
           where: { characterName: currItems[j].characterName },
         });
         if (character[1])
           console.log(`Typo found: ${character[0].characterName} spelled incorrectly`);
-        await character[0].spendDKP(currItems[j].itemDKPCost);
+        await character[0].spendDKP(newDrops[j].dropDKPCost);
         await character[0].addItem(newItems[j]);
-        let [[newDrop]] = await checkpoints[i].addItem(newItems[j]);
-        await newDrop.update({ characterId: character[0].id });
+        await Promise.all([
+          newDrops[j].setCheckpoint(checkpoints[j]),
+          newDrops[j].setItem(newItems[j]),
+          newDrops[j].setCharacter(character[0]),
+        ]);
       }
     }
   } catch (e) {

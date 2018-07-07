@@ -59,7 +59,8 @@ const formatForConfirmation = log => {
 };
 
 const writeToDatabase = async raidObj => {
-  await db.sync({ force: true });
+  // await db.sync({ force: true });
+  await db.sync();
   try {
     let now = Date.now();
     console.log(chalk.bold("Starting write..."));
@@ -85,6 +86,9 @@ const writeToDatabase = async raidObj => {
     console.log(chalk.magenta(`All done in ${Date.now() - now}ms!!`));
   } catch (e) {
     console.log(e);
+  } finally {
+    // db.close();
+    console.log("in finaly!");
   }
 };
 
@@ -126,5 +130,14 @@ const createString = raidObj => {
 
 // writeToDatabase(formatForConfirmation(logToParse));
 // console.log(parseAODoc(aoDoc));
-writeToDatabase(parseAODoc(aoDoc));
+// writeToDatabase(parseAODoc(aoDoc));
 // console.log(formatForConfirmation(logToParse));
+
+const doTwoThings = async () => {
+  await writeToDatabase(formatForConfirmation(logToParse));
+  await writeToDatabase(parseAODoc(aoDoc));
+  await db.close();
+  console.log("done!");
+};
+
+doTwoThings();
