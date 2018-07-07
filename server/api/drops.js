@@ -1,15 +1,15 @@
 const router = require("express").Router();
-const { Character, Checkpoint, Item } = require("../db/models");
+const { Character, Checkpoint, Drop, Drop } = require("../db/models");
 
-const NOUN = "item";
+const NOUN = "drop";
 
 router.get(`/`, async (req, res, next) => {
   try {
     res.json(
-      await Item.findAll({
+      await Drop.findAll({
         include: [{ all: true, nested: true }],
         order: [
-          ["itemName", "asc"],
+          ["dropName", "asc"],
           [Character, "characterName", "asc"],
           [Checkpoint, "id", "asc"],
         ],
@@ -23,7 +23,7 @@ router.get(`/`, async (req, res, next) => {
 router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
-      await Item.findById(req.params[`${NOUN}Id`], {
+      await Drop.findById(req.params[`${NOUN}Id`], {
         include: [{ all: true, nested: true }],
       })
     );
@@ -34,7 +34,7 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    res.json(await Item.create(req.body));
+    res.json(await Drop.create(req.body));
   } catch (e) {
     next(e);
   }
@@ -43,7 +43,7 @@ router.post("/", async (req, res, next) => {
 router.put(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
-      await Item.update(req.body, {
+      await Drop.update(req.body, {
         where: {
           id: req.params[`${NOUN}Id`],
         },
@@ -58,8 +58,8 @@ router.put(`/:${NOUN}Id`, async (req, res, next) => {
 
 router.delete(`/:${NOUN}Id`, async (req, res, next) => {
   try {
-    await Item.destroy({ where: { id: req.params.charId } });
-    const remaining = await Item.findAll();
+    await Drop.destroy({ where: { id: req.params.charId } });
+    const remaining = await Drop.findAll();
     res.json(remaining);
   } catch (e) {
     next(e);

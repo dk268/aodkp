@@ -3,7 +3,7 @@ const Character = require("./Character");
 const Checkpoint = require("./Checkpoint");
 const Item = require("./Item");
 const Raid = require("./Raid");
-const Drop = require("./Drop"); //join table; characterId is added column
+const Drop = require("./Drop");
 
 Character.belongsToMany(Checkpoint, { through: "character_checkpoint" });
 Checkpoint.belongsToMany(Character, { through: "character_checkpoint" });

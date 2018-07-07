@@ -17,6 +17,7 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
     res.json(
       await Raid.findById(req.params[`${NOUN}Id`], {
         include: [{ all: true, nested: true }],
+        order: [["id", "asc"], [Checkpoint, "id", "asc"], [Character, "characterName", "asc"]],
       })
     );
   } catch (e) {
