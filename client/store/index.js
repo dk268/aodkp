@@ -13,13 +13,10 @@ import allCheckpoints from "./allCheckpoints.js";
 import singleCheckpoint from "./singleCheckpoint.js";
 import auth from "./auth.js";
 import Axios from "axios";
+import allDrops from "./allDrops";
+import singleDrop from "./singleDrop";
 
-export const [UNASKED, LOADING, LOADED, ERROR] = [
-  `UNASKED`,
-  `LOADING`,
-  `LOADED`,
-  `ERROR`,
-];
+export const [UNASKED, LOADING, LOADED, ERROR] = [`UNASKED`, `LOADING`, `LOADED`, `ERROR`];
 
 const initialState = UNASKED;
 
@@ -39,12 +36,14 @@ const globalStatus = (state = initialState, action) => {
 };
 const rootReducer = combineReducers({
   allCharacters,
+  allDrops,
   allItems,
   allRaids,
   allCheckpoints,
   auth,
   user,
   singleCharacter,
+  singleDrop,
   singleItem,
   singleRaid,
   singleCheckpoint,
