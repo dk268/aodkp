@@ -7,8 +7,8 @@ router.get(`/`, async (req, res, next) => {
   try {
     res.json(
       await Character.findAll({
-        order: [["characterName", "asc"], [Item, "itemName", "ASC"]],
         include: [{ all: true, nested: true }],
+        order: [["characterName", "asc"], [Drop, "dropName", "ASC"]],
       })
     );
   } catch (e) {
@@ -21,6 +21,7 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
     res.json(
       await Character.findById(req.params[`${NOUN}Id`], {
         include: [{ all: true, nested: true }],
+        order: [["characterName", "asc"], [Drop, "dropName", "ASC"]],
       })
     );
   } catch (e) {
