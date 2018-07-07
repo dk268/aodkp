@@ -42,6 +42,9 @@ const NavbarAdmin = props => {
       <Button component={Link} to="/checkpoints" color="inherit">
         Checkpoints
       </Button>
+      <Button component={Link} to="/drops" color="inherit">
+        Drops
+      </Button>
     </Fragment>
   );
 };

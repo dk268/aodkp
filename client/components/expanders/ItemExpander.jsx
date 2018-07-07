@@ -42,7 +42,6 @@ const ItemExpander = props => {
           <Typography className={classes.heading} component={Link} to={`/items/${item.id}`}>
             {item.itemName}
           </Typography>
-          <Typography>{checkpoint.checkpointDKP}</Typography>
         </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.typographies}>
