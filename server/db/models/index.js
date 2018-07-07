@@ -12,8 +12,11 @@ Item.belongsToMany(Character, { through: "character_item" });
 Checkpoint.belongsTo(Raid);
 Raid.hasMany(Checkpoint);
 Drop.belongsTo(Checkpoint);
+Checkpoint.hasMany(Drop);
 Drop.belongsTo(Character);
+Character.hasMany(Drop);
 Drop.belongsTo(Item);
+Item.hasMany(Drop);
 
 module.exports = {
   User,

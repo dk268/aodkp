@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Character, Checkpoint, Item } = require("../db/models");
+const { Character, Item } = require("../db/models");
 
 const NOUN = "item";
 
@@ -8,11 +8,7 @@ router.get(`/`, async (req, res, next) => {
     res.json(
       await Item.findAll({
         include: [{ all: true, nested: true }],
-        order: [
-          ["itemName", "asc"],
-          [Character, "characterName", "asc"],
-          [Checkpoint, "id", "asc"],
-        ],
+        order: [["itemName", "asc"], [Character, "characterName", "asc"]],
       })
     );
   } catch (e) {

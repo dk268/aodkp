@@ -35,6 +35,7 @@ const styles = theme => ({
 
 const ItemExpander = props => {
   const { classes, item } = props;
+  console.log(props.item);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -46,15 +47,15 @@ const ItemExpander = props => {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.typographies}>
         <Typography>
-          Items dropped:{" "}
-          {checkpoint.items.map(item => (
+          Characters in possession:
+          {item.characters.map(character => (
             <Typography
               component={Link}
-              to={`/items/${item.itemId}`}
+              to={`/characters/${character.characterId}`}
               className={classes.expanderLink}
-              key={`item${item.itemId}`}>
-              {item.itemName}
-              {` `}
+              key={`character${character.characterId}`}>
+              {character.characterName}
+              {`bought for`}
             </Typography>
           ))}
         </Typography>
