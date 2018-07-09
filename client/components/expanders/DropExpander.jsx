@@ -35,7 +35,6 @@ const styles = theme => ({
 
 const DropExpander = props => {
   const { classes, drop } = props;
-  console.log(drop);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -49,12 +48,20 @@ const DropExpander = props => {
         </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.typographies}>
-        <Typography component={Link} to={`/characters/${drop.character.id}`}>
-          Character awarded: {drop.character.characterName}
+        <Typography>
+          Character awarded:{" "}
+          <Link className={classes.expanderLink} to={`/characters/${drop.character.id}`}>
+            {" "}
+            {drop.character.characterName}{" "}
+          </Link>
         </Typography>
         <Typography>DKP cost: {drop.dropDKPCost}</Typography>
-        <Typography component={Link} to={`/raids/${drop.checkpoint.raid.id}`}>
-          Raid acquired: {drop.checkpoint.raid.raidName}
+        <Typography>
+          Raid acquired:{" "}
+          <Link className={classes.expanderLink} to={`/raids/${drop.checkpoint.raid.id}`}>
+            {" "}
+            {drop.checkpoint.raid.raidName}{" "}
+          </Link>
         </Typography>
       </ExpansionPanelDetails>
     </ExpansionPanel>

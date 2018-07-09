@@ -53,6 +53,7 @@ const writeAttendanceToCheckpoints = async (checkpoints, raid, raidObj) => {
 
 const writeItemsToCheckpointsAndCharacters = async (checkpoints, raidObj) => {
   let counter = 0;
+  console.log(raidObj);
   try {
     for (let i = 0; i < checkpoints.length; i++) {
       let currItems = raidObj[checkpoints[i].checkpointName].items;
@@ -84,7 +85,7 @@ const writeItemsToCheckpointsAndCharacters = async (checkpoints, raidObj) => {
         await character[0].spendDKP(newDrops[j].dropDKPCost);
         await character[0].addItem(newItems[j]);
         await Promise.all([
-          newDrops[j].setCheckpoint(checkpoints[j]),
+          newDrops[j].setCheckpoint(checkpoints[i]),
           newDrops[j].setItem(newItems[j]),
           newDrops[j].setCharacter(character[0]),
         ]);
