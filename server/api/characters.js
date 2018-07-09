@@ -7,9 +7,9 @@ router.get(`/`, async (req, res, next) => {
     res.json(
       await Character.findAll({
         include: [
-          { model: Drop, include: [{ all: true }] },
-          { model: Checkpoint, include: [{ all: true }] },
-          { model: Item, include: [{ all: true }] },
+          { model: Drop, include: [Item, Checkpoint] },
+          { model: Checkpoint },
+          { model: Item, include: [Drop] },
         ],
         order: [["characterName", "asc"], [Drop, "dropName", "ASC"]],
       })
@@ -24,9 +24,9 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
     res.json(
       await Character.findById(req.params[`${NOUN}Id`], {
         include: [
-          { model: Drop, include: [{ all: true }] },
-          { model: Checkpoint, include: [{ all: true }] },
-          { model: Item, include: [{ all: true }] },
+          { model: Drop, include: [Item, Checkpoint] },
+          { model: Checkpoint },
+          { model: Item, include: [Drop] },
         ],
         order: [["characterName", "asc"], [Drop, "dropName", "ASC"]],
       })

@@ -51,13 +51,13 @@ const CheckpointExpander = props => {
       <ExpansionPanelDetails className={classes.typographies}>
         <Typography>
           Items dropped:{" "}
-          {checkpoint.items.map(item => (
+          {checkpoint.drops.map(drop => (
             <Typography
               component={Link}
-              to={`/items/${item.itemId}`}
+              to={`/drops/${drop.id}`}
               className={classes.expanderLink}
-              key={`item${item.itemId}`}>
-              {item.itemName}
+              key={`drop${drop.id}`}>
+              {drop.dropName}
               {` `}
             </Typography>
           ))}
@@ -68,8 +68,8 @@ const CheckpointExpander = props => {
             <Typography
               className={classes.expanderLink}
               component={Link}
-              to={`/characters/${character.characterId}`}
-              key={`character${character.characterId}`}>
+              to={`/characters/${character.id}`}
+              key={`character${character.id}`}>
               {character.characterName}
               {` `}
             </Typography>

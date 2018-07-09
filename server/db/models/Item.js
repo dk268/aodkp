@@ -6,10 +6,6 @@ const Item = db.define("item", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  // itemDKPCost: {
-  //   type: Sequelize.INTEGER,
-  //   defaultValue: 0,
-  // },
   itemLinkUrl: {
     type: Sequelize.STRING,
     defaultValue: `www.rickroll.com`,

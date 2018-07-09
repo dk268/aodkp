@@ -51,9 +51,9 @@ const ItemExpander = props => {
           {item.characters.map(character => (
             <Typography
               component={Link}
-              to={`/characters/${character.characterId}`}
+              to={`/characters/${character.id}`}
               className={classes.expanderLink}
-              key={`character${character.characterId}`}>
+              key={`character${character.id}`}>
               {character.characterName}
               {`bought for ${
                 character.drops.filter(drop => drop.itemId === item.id)[0].amount

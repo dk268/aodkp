@@ -7,7 +7,7 @@ router.get(`/`, async (req, res, next) => {
   try {
     res.json(
       await Drop.findAll({
-        include: [{ all: true, nested: true }],
+        include: [{ all: true }],
         order: [
           ["dropName", "asc"],
           [Character, "characterName", "asc"],
@@ -24,7 +24,7 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
       await Drop.findById(req.params[`${NOUN}Id`], {
-        include: [{ all: true, nested: true }],
+        include: [{ all: true }],
       })
     );
   } catch (e) {
