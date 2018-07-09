@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Character, Checkpoint, Drop, Drop } = require("../db/models");
+const { Character, Checkpoint, Drop } = require("../db/models");
 
 const NOUN = "drop";
 

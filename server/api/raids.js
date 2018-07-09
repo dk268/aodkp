@@ -1,12 +1,22 @@
 const router = require("express").Router();
-const { Character, Checkpoint, Item, Raid } = require("../db/models");
+const { Character, Checkpoint, Drop, Item, Raid } = require("../db/models");
 
 const NOUN = "raid";
-const OTHER_MODELS = [Checkpoint, Raid].filter(model => model !== Raid);
 
 router.get(`/`, async (req, res, next) => {
   try {
-    res.json(await Raid.findAll({ include: [{ all: true, nested: true }] }));
+    res.json(
+      await Raid.findAll({
+        include: [
+          { model: Checkpoint, include: [{ model: Drop, include: [Character, Item] }, Character] },
+        ],
+        order: [
+          ["id", "asc"],
+          [Checkpoint, "id", "asc"],
+          [Checkpoint, Character, "characterName", "asc"],
+        ],
+      })
+    );
   } catch (e) {
     next(e);
   }
@@ -16,8 +26,14 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
       await Raid.findById(req.params[`${NOUN}Id`], {
-        include: [{ all: true, nested: true }],
-        order: [["id", "asc"], [Checkpoint, "id", "asc"], [Character, "characterName", "asc"]],
+        include: [
+          { model: Checkpoint, include: [{ model: Drop, include: [Character, Item] }, Character] },
+        ],
+        order: [
+          ["id", "asc"],
+          [Checkpoint, "id", "asc"],
+          [Checkpoint, Character, "characterName", "asc"],
+        ],
       })
     );
   } catch (e) {
