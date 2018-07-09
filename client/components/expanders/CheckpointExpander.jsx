@@ -7,8 +7,15 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { List } from "@material-ui/core";
 
 const styles = theme => ({
+  root: {
+    maxHeight: `400px`,
+    position: `relative`,
+    overflow: `auto`,
+    minWidth: `30%`,
+  },
   grayCard: {
     display: `flex`,
     justifyContent: "space-between",
@@ -26,7 +33,7 @@ const styles = theme => ({
   typographies: {
     display: `flex`,
     justifyContent: `space-around`,
-    maxWidth: `70%`,
+    maxWidth: `90%`,
   },
   bolded: {
     fontWeight: `bold`,
@@ -62,19 +69,21 @@ const CheckpointExpander = props => {
             </Typography>
           ))}
         </Typography>
-        <Typography>
-          Characters present:{" "}
-          {checkpoint.characters.map(character => (
-            <Typography
-              className={classes.expanderLink}
-              component={Link}
-              to={`/characters/${character.id}`}
-              key={`character${character.id}`}>
-              {character.characterName}
-              {` `}
-            </Typography>
-          ))}
-        </Typography>
+        <List className={classes.root}>
+          <Typography>
+            Characters present:{" "}
+            {checkpoint.characters.map(character => (
+              <Typography
+                className={classes.expanderLink}
+                component={Link}
+                to={`/characters/${character.id}`}
+                key={`character${character.id}`}>
+                {character.characterName}
+                {` `}
+              </Typography>
+            ))}
+          </Typography>
+        </List>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );

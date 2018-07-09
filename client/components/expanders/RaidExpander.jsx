@@ -14,6 +14,7 @@ const styles = theme => ({
     maxHeight: `400px`,
     position: `relative`,
     overflow: `auto`,
+    minWidth: `30%`,
   },
   grayCard: {
     display: `flex`,
@@ -31,8 +32,8 @@ const styles = theme => ({
   },
   typographies: {
     display: `flex`,
-    justifyContent: `space-around`,
-    maxWidth: `70%`,
+    justifyContent: `space-between`,
+    maxWidth: `90%`,
   },
   bolded: {
     fontWeight: `bold`,
