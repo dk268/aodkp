@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Character, Checkpoint, Drop } = require("../db/models");
+const { Character, Checkpoint, Drop, Item, Raid } = require("../db/models");
 
 const NOUN = "drop";
 
@@ -7,7 +7,7 @@ router.get(`/`, async (req, res, next) => {
   try {
     res.json(
       await Drop.findAll({
-        include: [{ all: true }],
+        include: [Character, Item, { model: Checkpoint, include: [Raid] }],
         order: [
           ["dropName", "asc"],
           [Character, "characterName", "asc"],
@@ -24,7 +24,7 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
       await Drop.findById(req.params[`${NOUN}Id`], {
-        include: [{ all: true }],
+        include: [Character, Item, { model: Checkpoint, include: [Raid] }],
       })
     );
   } catch (e) {
