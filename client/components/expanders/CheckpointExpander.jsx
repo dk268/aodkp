@@ -11,7 +11,7 @@ import { List } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
-    maxHeight: `400px`,
+    maxHeight: `250px`,
     position: `relative`,
     overflow: `auto`,
     minWidth: `30%`,
