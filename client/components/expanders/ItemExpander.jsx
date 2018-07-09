@@ -55,20 +55,9 @@ const ItemExpander = props => {
               className={classes.expanderLink}
               key={`character${character.characterId}`}>
               {character.characterName}
-              {`bought for`}
-            </Typography>
-          ))}
-        </Typography>
-        <Typography>
-          Characters present:{" "}
-          {checkpoint.characters.map(character => (
-            <Typography
-              className={classes.expanderLink}
-              component={Link}
-              to={`/characters/${character.characterId}`}
-              key={`character${character.characterId}`}>
-              {character.characterName}
-              {` `}
+              {`bought for ${
+                character.drops.filter(drop => drop.itemId === item.id)[0].amount
+              } dkp`}
             </Typography>
           ))}
         </Typography>
