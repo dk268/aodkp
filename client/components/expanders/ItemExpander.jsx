@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -49,15 +49,14 @@ const ItemExpander = props => {
         <Typography>
           Characters in possession:
           {item.characters.map(character => (
-            <Typography
-              component={Link}
-              to={`/characters/${character.id}`}
-              className={classes.expanderLink}
-              key={`character${character.id}`}>
-              {character.characterName}
-              {`bought for ${
-                character.drops.filter(drop => drop.itemId === item.id)[0].amount
-              } dkp`}
+            <Typography key={`character${character.id}`}>
+              <Link className={classes.expanderLink} to={`/characters/${character.id}`}>
+                {" "}
+                {character.characterName}{" "}
+              </Link>
+              {` bought for ${
+                item.drops.filter(drop => drop.characterId === character.id)[0].dropDKPCost
+              } dkp`}{" "}
             </Typography>
           ))}
         </Typography>
