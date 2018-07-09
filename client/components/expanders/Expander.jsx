@@ -2,6 +2,7 @@ import React from "react";
 import CharacterExpander from "./CharacterExpander";
 import CheckpointExpander from "./CheckpointExpander";
 import ItemExpander from "./ItemExpander";
+import RaidExpander from "./RaidExpander";
 
 const Expander = props => {
   switch (props.modelName) {
@@ -9,10 +10,12 @@ const Expander = props => {
       return <CharacterExpander {...props} />;
     case "Checkpoint":
       return <CheckpointExpander {...props} />;
+    case "Drop":
+      return "drop";
     case "Item":
       return <ItemExpander {...props} />;
     case "Raid":
-      return "raid";
+      return <RaidExpander {...props} />;
     default:
       return "fail";
   }

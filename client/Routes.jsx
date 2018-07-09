@@ -9,6 +9,7 @@ import AllCheckpoints from "./components/AllCheckpoints";
 import { withStyles } from "@material-ui/core";
 import AllDrops from "./components/AllDrops";
 import AllItems from "./components/AllItems";
+import AllRaids from "./components/AllRaids";
 
 /**
  * COMPONENT
@@ -41,7 +42,7 @@ class Routes extends Component {
         <Route exact path="/checkpoints" component={AllCheckpoints} />
         <Route exact path="/drops" component={AllDrops} />
         <Route exact path="/items" component={AllItems} />
-        {/* <Route exact path="/raids" component={AllRaids} /> */}
+        <Route exact path="/raids" component={AllRaids} />
         {/* <Route
           exact
           path="/characters/:characterId"
