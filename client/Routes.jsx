@@ -10,6 +10,7 @@ import { withStyles } from "@material-ui/core";
 import AllDrops from "./components/AllDrops";
 import AllItems from "./components/AllItems";
 import AllRaids from "./components/AllRaids";
+import SingleCharacter from "./components/SingleCharacter";
 
 /**
  * COMPONENT
@@ -43,11 +44,7 @@ class Routes extends Component {
         <Route exact path="/drops" component={AllDrops} />
         <Route exact path="/items" component={AllItems} />
         <Route exact path="/raids" component={AllRaids} />
-        {/* <Route
-          exact
-          path="/characters/:characterId"
-          component={SingleCharacter}
-        /> */}
+        <Route exact path="/characters/:characterId" component={SingleCharacter} />
         {/* <Route exact path="/drops/:dropId" component={SingleDrop} /> */}
         {/* <Route exact path="/items/:itemId" component={SingleItem} /> */}
         {/* <Route exact path="/raids/:raidId" component={SingleRaid} /> */}

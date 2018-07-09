@@ -32,7 +32,14 @@ form div {
 .chart {
   width: 99%;
   margin: 0 auto;
-  background-color: gray;
+  background-color: lightgray;
+}
+
+.margin-10-indent {
+  margin: 0 10%;
+}
+.margin-5-indent {
+  margin: 0 5%;
 }
 
 .gray-bg {
