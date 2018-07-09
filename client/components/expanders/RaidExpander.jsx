@@ -7,8 +7,14 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { List, ListItem } from "@material-ui/core";
 
 const styles = theme => ({
+  root: {
+    maxHeight: `400px`,
+    position: `relative`,
+    overflow: `auto`,
+  },
   grayCard: {
     display: `flex`,
     justifyContent: "space-between",
@@ -86,19 +92,20 @@ const RaidExpander = props => {
               </Typography>
             ))}
         </Typography>
-        <Typography>
-          Characters present:{" "}
-          {raidAttendance.map(character => (
-            <Typography
-              className={classes.expanderLink}
-              component={Link}
-              to={`/characters/${character.id}`}
-              key={`character${character.id}`}>
-              {character.characterName}
-              {` `}
-            </Typography>
-          ))}
-        </Typography>
+        <List className={classes.root}>
+          <Typography>
+            Characters present:{" "}
+            {raidAttendance.map(character => (
+              <Typography
+                key={`character${character.id}`}
+                className={classes.expanderLink}
+                component={Link}
+                to={`/characters/${character.id}`}>
+                {character.characterName}
+              </Typography>
+            ))}
+          </Typography>
+        </List>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
