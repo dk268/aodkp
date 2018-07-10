@@ -69,7 +69,7 @@ export const SingleItemRaidsExpander = withStyles(styles)(props => {
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.whiteCard}>
-          <Typography className={`${classes.heading}`}>Raids</Typography>
+          <Typography className={`${classes.heading}`}>Raids with this item</Typography>
         </div>{" "}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.typographies}>
@@ -93,7 +93,7 @@ export const SingleItemCheckpointsExpander = withStyles(styles)(props => {
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.whiteCard}>
-          <Typography className={`${classes.heading}`}>Checkpoints</Typography>
+          <Typography className={`${classes.heading}`}>Checkpoints with this item</Typography>
         </div>{" "}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
@@ -119,7 +119,7 @@ export const SingleItemDropsExpander = withStyles(styles)(props => {
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.whiteCard}>
-          <Typography className={`${classes.heading}`}>Drops</Typography>
+          <Typography className={`${classes.heading}`}>Drops of this item</Typography>
         </div>{" "}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
@@ -144,17 +144,17 @@ export const SingleItemCharactersExpander = withStyles(styles)(props => {
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.whiteCard}>
-          <Typography className={`${classes.heading}`}>Drops</Typography>
+          <Typography className={`${classes.heading}`}>Characters with item</Typography>
         </div>{" "}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <List className={classes.root}>
-          {singleItem.drops.map(drop => (
-            <Typography key={drop.id}>
-              <Link to={`/items/${drop.item.id}`} className={classes.expanderLink}>
-                {drop.dropName}
+          {singleItem.characters.map(character => (
+            <Typography key={character.id}>
+              <Link to={`/characters/${character.id}`} className={classes.expanderLink}>
+                {character.characterName}
               </Link>
-              {` for ${drop.dropDKPCost} dkp`}
+              {` for ${character.drops.filter(drop => drop.itemId === item.id)[0].dropDKPCost} dkp`}
             </Typography>
           ))}
         </List>
@@ -170,5 +170,8 @@ SingleItemCheckpointsExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 SingleItemDropsExpander.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+SingleItemCharactersExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };

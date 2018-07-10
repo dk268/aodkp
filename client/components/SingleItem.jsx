@@ -14,6 +14,7 @@ import {
   SingleItemRaidsExpander,
   SingleItemCheckpointsExpander,
   SingleItemDropsExpander,
+  SingleItemCharactersExpander,
 } from "./helpers/SingleItemComponents";
 
 const styles = theme => ({
@@ -48,8 +49,9 @@ class SingleItem extends Component {
             <Paper className={classes.blueBG}>
               <div className="chart">
                 <SingleItemRaidsExpander {...this.props} />
-                <SingleItemCheckpointsExpander {...this.props} />
+                <SingleItemCharactersExpander {...this.props} />
                 <SingleItemDropsExpander {...this.props} />
+                <SingleItemCheckpointsExpander {...this.props} />
               </div>
             </Paper>
           </Paper>
