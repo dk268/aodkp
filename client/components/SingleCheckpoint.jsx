@@ -11,7 +11,7 @@ import CircularIndeterminate from "./loaders/CircularIndeterminate";
 import { getSingleCheckpoint } from "../store/singleCheckpoint";
 import {
   SingleCheckpointHeader,
-  SingleCheckpointCheckpointsExpander,
+  SingleCheckpointCharactersExpander,
   SingleCheckpointDropsExpander,
 } from "./helpers/SingleCheckpointComponents";
 
@@ -48,8 +48,7 @@ class SingleCheckpoint extends Component {
             <SingleCheckpointHeader {...this.props} id="checkpoint-gradient" />
             <Paper className={classes.blueBG}>
               <div className="chart">
-                <SingleCheckpointRaidsExpander {...this.props} />
-                <SingleCheckpointCheckpointsExpander {...this.props} />
+                <SingleCheckpointCharactersExpander {...this.props} />
                 <SingleCheckpointDropsExpander {...this.props} />
               </div>
             </Paper>
