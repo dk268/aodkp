@@ -7,10 +7,6 @@ import { Link, withRouter } from "react-router-dom";
 import { LOADING, LOADED, ERROR } from "../store";
 import { Paper } from "@material-ui/core";
 import CircularIndeterminate from "./loaders/CircularIndeterminate";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { getSingleCharacter } from "../store/singleCharacter";
 import {
@@ -31,7 +27,7 @@ const styles = theme => ({
   },
 });
 
-class singleCharacter extends Component {
+class SingleCharacter extends Component {
   componentDidMount = () => {
     if (
       this.props.status !== LOADED ||
@@ -80,5 +76,5 @@ const mapDispatchToProps = {
 };
 
 export default withStyles(styles)(
-  withRouter(connect(mapStateToProps, mapDispatchToProps)(singleCharacter))
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleCharacter))
 );
