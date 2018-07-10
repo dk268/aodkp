@@ -8,14 +8,14 @@ import { LOADING, LOADED, ERROR } from "../store";
 import { Paper } from "@material-ui/core";
 import CircularIndeterminate from "./loaders/CircularIndeterminate";
 
-import { getSingleItem } from "../store/singleItem";
+import { getSingleRaid } from "../store/singleRaid";
 import {
-  SingleItemHeader,
-  SingleItemRaidsExpander,
-  SingleItemCheckpointsExpander,
-  SingleItemDropsExpander,
-  SingleItemCharactersExpander,
-} from "./helpers/SingleItemComponents";
+  SingleRaidHeader,
+  SingleRaidRaidsExpander,
+  SingleRaidCheckpointsExpander,
+  SingleRaidDropsExpander,
+  SingleRaidCharactersExpander,
+} from "./helpers/SingleRaidComponents";
 
 const styles = theme => ({
   blueBG: {
@@ -28,10 +28,10 @@ const styles = theme => ({
   },
 });
 
-class SingleItem extends Component {
+class SingleRaid extends Component {
   componentDidMount = () => {
-    if (this.props.status !== LOADED || this.props.singleItem.id !== this.props.match.params.itemId)
-      this.props.getSingleItem(this.props.match.params.itemId);
+    if (this.props.status !== LOADED || this.props.singleRaid.id !== this.props.match.params.raidId)
+      this.props.getSingleRaid(this.props.match.params.raidId);
   };
 
   render = () => {
@@ -44,13 +44,13 @@ class SingleItem extends Component {
       case LOADED:
         return (
           <Paper>
-            <SingleItemHeader {...this.props} id="item-gradient" />
+            <SingleRaidHeader {...this.props} id="raid-gradient" />
             <Paper className={classes.blueBG}>
               <div className="chart">
-                <SingleItemRaidsExpander {...this.props} />
-                <SingleItemCharactersExpander {...this.props} />
-                <SingleItemDropsExpander {...this.props} />
-                <SingleItemCheckpointsExpander {...this.props} />
+                <SingleRaidRaidsExpander {...this.props} />
+                <SingleRaidCharactersExpander {...this.props} />
+                <SingleRaidDropsExpander {...this.props} />
+                <SingleRaidCheckpointsExpander {...this.props} />
               </div>
             </Paper>
           </Paper>
@@ -66,14 +66,14 @@ Expander.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  status: state.singleItem.status,
-  singleItem: state.singleItem.collection,
+  status: state.singleRaid.status,
+  singleRaid: state.singleRaid.collection,
 });
 
 const mapDispatchToProps = {
-  getSingleItem,
+  getSingleRaid,
 };
 
 export default withStyles(styles)(
-  withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleItem))
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleRaid))
 );

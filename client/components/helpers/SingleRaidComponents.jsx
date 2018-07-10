@@ -44,27 +44,27 @@ const styles = theme => ({
   },
 });
 
-export const SingleItemHeader = props => {
-  const { singleItem } = props;
+export const SingleRaidHeader = props => {
+  const { singleRaid } = props;
   return (
     <Paper>
       <Typography variant="display3" color="default">
-        {singleItem.itemName}
+        {singleRaid.raidName}
       </Typography>
     </Paper>
   );
 };
 
-export const SingleItemRaidsExpander = withStyles(styles)(props => {
-  const { singleItem, classes } = props;
-  const raidSet = new Set();
-  const itemRaids = singleItem.drops
-    .reduce((acc, drop) => acc.concat(drop.checkpoint), [])
-    .map(checkpoint => checkpoint.raid)
+export const SingleRaidCharactersExpander = withStyles(styles)(props => {
+  const { singleRaid, classes } = props;
+  const characterSet = new Set();
+  const raidCharacters = singleRaid.checkpoints
+    .reduce((acc, checkpoint) => acc.concat(checkpoint.characters), [])
+    .map(character => character.characterName)
     .filter(raid => {
-      if (raidSet.has(raid.raidName)) return false;
+      if (characterSet.has(character.characterName)) return false;
       else {
-        raidSet.add(raid.raidName);
+        characterSet.add(character.characterName);
         return true;
       }
     });
@@ -72,44 +72,18 @@ export const SingleItemRaidsExpander = withStyles(styles)(props => {
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.whiteCard}>
-          <Typography className={`${classes.heading}`}>Raids with this item</Typography>
+          <Typography className={`${classes.heading}`}>Characters in this raid</Typography>
         </div>{" "}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.typographies}>
-        {itemRaids.map(raid => (
-          <Typography
-            key={raid.id}
-            component={Link}
-            to={`/raids/${raid.id}`}
-            className={classes.expanderLink}>
-            {raid.raidName}
-          </Typography>
-        ))}
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
-  );
-});
-
-export const SingleItemCheckpointsExpander = withStyles(styles)(props => {
-  const { singleItem, classes } = props;
-  return (
-    <ExpansionPanel>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        <div className={classes.whiteCard}>
-          <Typography className={`${classes.heading}`}>Checkpoints with this item</Typography>
-        </div>{" "}
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
         <List className={classes.root}>
-          {singleItem.drops.filter(drop => drop.itemId === singleItem.id).map(drop => (
-            <Typography key={drop.id}>
-              <Link to={`/checkpoints/${drop.checkpoint.id}`} className={classes.expanderLink}>
-                {drop.checkpoint.checkpointName}
-              </Link>
-              {` of raid: `}
-              <Link to={`/raids/${drop.checkpoint.raid.id}`} className={classes.expanderLink}>
-                {drop.checkpoint.raid.raidName}
-              </Link>
+          {raidCharacters.map(character => (
+            <Typography
+              key={character.id}
+              component={Link}
+              to={`/characters/${character.id}`}
+              className={classes.expanderLink}>
+              {character.characterName}
             </Typography>
           ))}
         </List>
@@ -118,18 +92,51 @@ export const SingleItemCheckpointsExpander = withStyles(styles)(props => {
   );
 });
 
-export const SingleItemDropsExpander = withStyles(styles)(props => {
-  const { singleItem, classes } = props;
+export const SingleRaidCheckpointsExpander = withStyles(styles)(props => {
+  const { singleRaid, classes } = props;
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.whiteCard}>
-          <Typography className={`${classes.heading}`}>Drops of this item</Typography>
+          <Typography className={`${classes.heading}`}>Checkpoints in this raid</Typography>
+        </div>{" "}
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>
+        {singleRaid.checkpoints.map(checkpoint => (
+          <Typography key={checkpoint.id}>
+            <Link to={`/checkpoints/${checkpoint.id}`} className={classes.expanderLink}>
+              {checkpoint.checkpointName}
+            </Link>
+          </Typography>
+        ))}
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
+  );
+});
+
+export const SingleRaidDropsExpander = withStyles(styles)(props => {
+  const { singleRaid, classes } = props;
+  const dropSet = new Set();
+  const raidDrops = singleRaid.checkpoints
+    .reduce((acc, checkpoint) => acc.concat(checkpoint.drops), [])
+    .map(drop => drop.dropName)
+    .filter(drop => {
+      if (dropSet.has(drop.dropName)) return false;
+      else {
+        dropSet.add(drop.dropName);
+        return true;
+      }
+    });
+  return (
+    <ExpansionPanel>
+      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <div className={classes.whiteCard}>
+          <Typography className={`${classes.heading}`}>Drops of this raid</Typography>
         </div>{" "}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <List className={classes.root}>
-          {singleItem.drops.map(drop => (
+          {raidDrops.map(drop => (
             <Typography key={drop.id}>
               <Link to={`/drops/${drop.id}`} className={classes.expanderLink}>
                 {drop.dropName}
@@ -137,10 +144,6 @@ export const SingleItemDropsExpander = withStyles(styles)(props => {
               {` to `}{" "}
               <Link to={`/characters/${drop.characterId}`} className={classes.expanderLink}>
                 {drop.character.characterName}
-              </Link>
-              {` in raid: `}
-              <Link to={`/raids/${drop.checkpoint.raid.id}`} className={classes.expanderLink}>
-                {drop.checkpoint.raid.raidName}
               </Link>
               {` at checkpoint `}
               <Link to={`/checkpoints/${drop.checkpoint.id}`} className={classes.expanderLink}>
@@ -155,67 +158,67 @@ export const SingleItemDropsExpander = withStyles(styles)(props => {
   );
 });
 
-export const SingleItemCharactersExpander = withStyles(styles)(props => {
-  const { singleItem, classes } = props;
-  console.log(singleItem);
-  return (
-    <ExpansionPanel>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-        <div className={classes.whiteCard}>
-          <Typography className={`${classes.heading}`}>Characters with this item</Typography>
-        </div>{" "}
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
-        <List className={classes.root}>
-          {singleItem.characters.map(character => (
-            <Typography key={character.id}>
-              <Link to={`/characters/${character.id}`} className={classes.expanderLink}>
-                {character.characterName}
-              </Link>
-              {` in raid: `}
-              <Link
-                to={`/raids/${
-                  singleItem.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
-                    .raid.id
-                }`}
-                className={classes.expanderLink}>
-                {
-                  singleItem.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
-                    .raid.raidName
-                }
-              </Link>
-              {` at checkpoint `}
-              <Link
-                to={`/checkpoints/${
-                  singleItem.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
-                    .id
-                }`}
-                className={classes.expanderLink}>
-                {
-                  singleItem.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
-                    .checkpointName
-                }
-              </Link>
-              {` for ${
-                singleItem.drops.filter(drop => drop.characterId === character.id)[0].dropDKPCost
-              } dkp`}
-            </Typography>
-          ))}
-        </List>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
-  );
-});
+// export const SingleRaidItemsExpander = withStyles(styles)(props => {
+//   const { singleRaid, classes } = props;
+//   console.log(singleRaid);
+//   return (
+//     <ExpansionPanel>
+//       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+//         <div className={classes.whiteCard}>
+//           <Typography className={`${classes.heading}`}>Characters with this raid</Typography>
+//         </div>{" "}
+//       </ExpansionPanelSummary>
+//       <ExpansionPanelDetails>
+//         <List className={classes.root}>
+//           {singleRaid.characters.map(character => (
+//             <Typography key={character.id}>
+//               <Link to={`/characters/${character.id}`} className={classes.expanderLink}>
+//                 {character.characterName}
+//               </Link>
+//               {` in raid: `}
+//               <Link
+//                 to={`/raids/${
+//                   singleRaid.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
+//                     .raid.id
+//                 }`}
+//                 className={classes.expanderLink}>
+//                 {
+//                   singleRaid.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
+//                     .raid.raidName
+//                 }
+//               </Link>
+//               {` at checkpoint `}
+//               <Link
+//                 to={`/checkpoints/${
+//                   singleRaid.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
+//                     .id
+//                 }`}
+//                 className={classes.expanderLink}>
+//                 {
+//                   singleRaid.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
+//                     .checkpointName
+//                 }
+//               </Link>
+//               {` for ${
+//                 singleRaid.drops.filter(drop => drop.characterId === character.id)[0].dropDKPCost
+//               } dkp`}
+//             </Typography>
+//           ))}
+//         </List>
+//       </ExpansionPanelDetails>
+//     </ExpansionPanel>
+//   );
+// });
 
-SingleItemRaidsExpander.propTypes = {
+SingleRaidRaidsExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-SingleItemCheckpointsExpander.propTypes = {
+SingleRaidCheckpointsExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-SingleItemDropsExpander.propTypes = {
+SingleRaidDropsExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-SingleItemCharactersExpander.propTypes = {
+SingleRaidCharactersExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };
