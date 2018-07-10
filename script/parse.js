@@ -124,9 +124,25 @@ const createString = raidObj => {
   return output;
 };
 
+const findNew = async raidObj => {
+  const [extantCharacters, extantItems] = await Promise.all([
+    Array.map.call(Character.findAll(), character => character.characterName),
+    Array.map.call(Item.findAll(), item => item.itemName),
+  ]);
+  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
+  const charList = [...new Set(cpNames.reduce((acc, cpName) => acc.concat(raidObj[cpName].attendance)))];
+  const charSet = new Set(extantCharacters);
+  const unfoundCharacters = [];
+
+  const unfoundItems = [];
+};
+
 // console.log(formatForConfirmation(logToParse));
 // console.log(createString(formatForConfirmation(logToParse)));
 // console.log(createString(parseAODoc(aoDoc)));
+
+const confirmAODoc = doc => createString(parseAODoc(doc));
+module.exports = { confirmAODoc, findNew };
 
 // writeToDatabase(formatForConfirmation(logToParse));
 // console.log(parseAODoc(aoDoc));
@@ -140,4 +156,4 @@ const doTwoThings = async () => {
   console.log("done!");
 };
 
-doTwoThings();
+// doTwoThings();

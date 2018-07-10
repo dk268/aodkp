@@ -15,6 +15,7 @@ import SingleCheckpoint from "./components/SingleCheckpoint";
 import SingleDrop from "./components/SingleDrop";
 import SingleItem from "./components/SingleItem";
 import SingleRaid from "./components/SingleRaid";
+import UploadDoc from "./components/UploadDoc";
 
 /**
  * COMPONENT
@@ -53,6 +54,7 @@ class Routes extends Component {
         <Route exact path="/drops/:dropId" component={SingleDrop} />
         <Route exact path="/items/:itemId" component={SingleItem} />
         <Route exact path="/raids/:raidId" component={SingleRaid} />
+        <Route exact path="/upload" component={UploadDoc} />
         {/*isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in }
