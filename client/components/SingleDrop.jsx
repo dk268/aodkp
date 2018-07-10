@@ -16,16 +16,7 @@ import {
   SingleDropDropsExpander,
 } from "./helpers/SingleDropComponents";
 
-const styles = theme => ({
-  blueBG: {
-    width: "100%",
-    backgroundColor: `lightblue`,
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-});
+const styles = theme => ({});
 
 class SingleDrop extends Component {
   componentDidMount = () => {
@@ -34,7 +25,6 @@ class SingleDrop extends Component {
   };
 
   render = () => {
-    const { classes } = this.props;
     switch (this.props.status) {
       case LOADING:
         return <CircularIndeterminate />;
@@ -44,13 +34,6 @@ class SingleDrop extends Component {
         return (
           <Paper>
             <SingleDropHeader {...this.props} id="drop-gradient" />
-            <Paper className={classes.blueBG}>
-              <div className="chart">
-                <SingleDropRaidsExpander {...this.props} />
-                <SingleDropCheckpointsExpander {...this.props} />
-                <SingleDropDropsExpander {...this.props} />
-              </div>
-            </Paper>
           </Paper>
         );
       default:
