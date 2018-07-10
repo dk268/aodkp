@@ -22,7 +22,7 @@ const styles = theme => ({
   typographies: {
     display: `flex`,
     justifyContent: `space-around`,
-    maxWidth: `70%`,
+    maxWidth: `90%`,
   },
   expanderLink: {
     color: `darkblue`,
@@ -61,6 +61,13 @@ const DropExpander = props => {
           <Link className={classes.expanderLink} to={`/raids/${drop.checkpoint.raid.id}`}>
             {" "}
             {drop.checkpoint.raid.raidName}{" "}
+          </Link>
+        </Typography>
+        <Typography>
+          {" "}
+          Specific drop:{" "}
+          <Link className={classes.expanderLink} to={`/drops/${drop.id}`}>
+            (link)
           </Link>
         </Typography>
       </ExpansionPanelDetails>

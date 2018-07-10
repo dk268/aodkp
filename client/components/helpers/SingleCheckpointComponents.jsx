@@ -44,11 +44,11 @@ const styles = theme => ({
   },
 });
 
-export const SingleCheckpointHeader = props => {
+export const SingleCheckpointHeader = withStyles(styles)(props => {
   const { singleCheckpoint, classes } = props;
   return (
     <Paper>
-      <Typography variant="display3" color="textSecondary">
+      <Typography variant="display3" color="primary">
         {singleCheckpoint.checkpointName}
       </Typography>
       <div className="margin-10-indent">
@@ -62,7 +62,7 @@ export const SingleCheckpointHeader = props => {
       </div>
     </Paper>
   );
-};
+});
 
 export const SingleCheckpointCharactersExpander = withStyles(styles)(props => {
   const { singleCheckpoint, classes } = props;
@@ -119,6 +119,9 @@ export const SingleCheckpointDropsExpander = withStyles(styles)(props => {
   );
 });
 
+SingleCheckpointHeader.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 SingleCheckpointCharactersExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };
