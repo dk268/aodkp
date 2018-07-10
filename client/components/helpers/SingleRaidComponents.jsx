@@ -60,8 +60,7 @@ export const SingleRaidCharactersExpander = withStyles(styles)(props => {
   const characterSet = new Set();
   const raidCharacters = singleRaid.checkpoints
     .reduce((acc, checkpoint) => acc.concat(checkpoint.characters), [])
-    .map(character => character.characterName)
-    .filter(raid => {
+    .filter(character => {
       if (characterSet.has(character.characterName)) return false;
       else {
         characterSet.add(character.characterName);
@@ -103,10 +102,12 @@ export const SingleRaidCheckpointsExpander = withStyles(styles)(props => {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         {singleRaid.checkpoints.map(checkpoint => (
-          <Typography key={checkpoint.id}>
-            <Link to={`/checkpoints/${checkpoint.id}`} className={classes.expanderLink}>
-              {checkpoint.checkpointName}
-            </Link>
+          <Typography
+            key={checkpoint.id}
+            component={Link}
+            to={`/checkpoints/${checkpoint.id}`}
+            className={classes.expanderLink}>
+            {checkpoint.checkpointName}
           </Typography>
         ))}
       </ExpansionPanelDetails>
@@ -119,7 +120,6 @@ export const SingleRaidDropsExpander = withStyles(styles)(props => {
   const dropSet = new Set();
   const raidDrops = singleRaid.checkpoints
     .reduce((acc, checkpoint) => acc.concat(checkpoint.drops), [])
-    .map(drop => drop.dropName)
     .filter(drop => {
       if (dropSet.has(drop.dropName)) return false;
       else {
@@ -127,6 +127,7 @@ export const SingleRaidDropsExpander = withStyles(styles)(props => {
         return true;
       }
     });
+  console.log(raidDrops);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -158,9 +159,6 @@ export const SingleRaidDropsExpander = withStyles(styles)(props => {
   );
 });
 
-SingleRaidRaidsExpander.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 SingleRaidCheckpointsExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };

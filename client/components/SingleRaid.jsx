@@ -11,7 +11,6 @@ import CircularIndeterminate from "./loaders/CircularIndeterminate";
 import { getSingleRaid } from "../store/singleRaid";
 import {
   SingleRaidHeader,
-  SingleRaidRaidsExpander,
   SingleRaidCheckpointsExpander,
   SingleRaidDropsExpander,
   SingleRaidCharactersExpander,
@@ -47,7 +46,6 @@ class SingleRaid extends Component {
             <SingleRaidHeader {...this.props} id="raid-gradient" />
             <Paper className={classes.blueBG}>
               <div className="chart">
-                <SingleRaidRaidsExpander {...this.props} />
                 <SingleRaidCharactersExpander {...this.props} />
                 <SingleRaidDropsExpander {...this.props} />
                 <SingleRaidCheckpointsExpander {...this.props} />

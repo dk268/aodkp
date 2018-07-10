@@ -8,7 +8,10 @@ router.get(`/`, async (req, res, next) => {
     res.json(
       await Raid.findAll({
         include: [
-          { model: Checkpoint, include: [{ model: Drop, include: [Character, Item] }, Character] },
+          {
+            model: Checkpoint,
+            include: [{ model: Drop, include: [Character, Item, Checkpoint] }, Character],
+          },
         ],
         order: [
           ["id", "asc"],
@@ -27,7 +30,10 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
     res.json(
       await Raid.findById(req.params[`${NOUN}Id`], {
         include: [
-          { model: Checkpoint, include: [{ model: Drop, include: [Character, Item] }, Character] },
+          {
+            model: Checkpoint,
+            include: [{ model: Drop, include: [Character, Item, Checkpoint] }, Character],
+          },
         ],
         order: [
           ["id", "asc"],
