@@ -35,7 +35,6 @@ class SingleItem extends Component {
   };
 
   render = () => {
-    console.log(this.props);
     const { classes } = this.props;
     switch (this.props.status) {
       case LOADING:

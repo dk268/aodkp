@@ -13,6 +13,7 @@ import AllRaids from "./components/AllRaids";
 import SingleCharacter from "./components/SingleCharacter";
 import SingleCheckpoint from "./components/SingleCheckpoint";
 import SingleDrop from "./components/SingleDrop";
+import SingleItem from "./components/SingleItem";
 
 /**
  * COMPONENT
@@ -49,7 +50,7 @@ class Routes extends Component {
         <Route exact path="/characters/:characterId" component={SingleCharacter} />
         <Route exact path="/checkpoints/:checkpointId" component={SingleCheckpoint} />
         <Route exact path="/drops/:dropId" component={SingleDrop} />
-        {/* <Route exact path="/items/:itemId" component={SingleItem} /> */}
+        <Route exact path="/items/:itemId" component={SingleItem} />
         {/* <Route exact path="/raids/:raidId" component={SingleRaid} /> */}
         {/*isLoggedIn && (
           <Switch>
