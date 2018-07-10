@@ -158,58 +158,6 @@ export const SingleRaidDropsExpander = withStyles(styles)(props => {
   );
 });
 
-// export const SingleRaidItemsExpander = withStyles(styles)(props => {
-//   const { singleRaid, classes } = props;
-//   console.log(singleRaid);
-//   return (
-//     <ExpansionPanel>
-//       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-//         <div className={classes.whiteCard}>
-//           <Typography className={`${classes.heading}`}>Characters with this raid</Typography>
-//         </div>{" "}
-//       </ExpansionPanelSummary>
-//       <ExpansionPanelDetails>
-//         <List className={classes.root}>
-//           {singleRaid.characters.map(character => (
-//             <Typography key={character.id}>
-//               <Link to={`/characters/${character.id}`} className={classes.expanderLink}>
-//                 {character.characterName}
-//               </Link>
-//               {` in raid: `}
-//               <Link
-//                 to={`/raids/${
-//                   singleRaid.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
-//                     .raid.id
-//                 }`}
-//                 className={classes.expanderLink}>
-//                 {
-//                   singleRaid.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
-//                     .raid.raidName
-//                 }
-//               </Link>
-//               {` at checkpoint `}
-//               <Link
-//                 to={`/checkpoints/${
-//                   singleRaid.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
-//                     .id
-//                 }`}
-//                 className={classes.expanderLink}>
-//                 {
-//                   singleRaid.drops.filter(drop => drop.characterId === character.id)[0].checkpoint
-//                     .checkpointName
-//                 }
-//               </Link>
-//               {` for ${
-//                 singleRaid.drops.filter(drop => drop.characterId === character.id)[0].dropDKPCost
-//               } dkp`}
-//             </Typography>
-//           ))}
-//         </List>
-//       </ExpansionPanelDetails>
-//     </ExpansionPanel>
-//   );
-// });
-
 SingleRaidRaidsExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };
