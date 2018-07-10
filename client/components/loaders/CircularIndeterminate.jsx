@@ -13,7 +13,7 @@ const styles = theme => ({
 function CircularIndeterminate(props) {
   const { classes } = props;
   return (
-    <div>
+    <div style={{ margin: `0 auto` }}>
       <CircularProgress
         className={classes.progress}
         size={75}

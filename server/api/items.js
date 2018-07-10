@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Character, Item, Drop } = require("../db/models");
+const { Character, Item, Drop, Checkpoint, Raid } = require("../db/models");
 
 const NOUN = "item";
 
@@ -7,8 +7,15 @@ router.get(`/`, async (req, res, next) => {
   try {
     res.json(
       await Item.findAll({
-        include: [{ model: Drop, include: [{ all: true }] }, { model: Character }],
-        order: [["itemName", "asc"], [Character, "characterName", "asc"]],
+        include: [
+          { model: Drop, include: [Character, { model: Checkpoint, include: [Raid] }] },
+          Character,
+        ],
+        order: [
+          ["itemName", "asc"],
+          [Character, "characterName", "asc"],
+          [Drop, Character, "characterName", "asc"],
+        ],
       })
     );
   } catch (e) {
@@ -20,8 +27,15 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
       await Item.findById(req.params[`${NOUN}Id`], {
-        include: [{ model: Drop, include: [{ all: true }] }, { model: Character }],
-        order: [["itemName", "asc"], [Character, "characterName", "asc"]],
+        include: [
+          { model: Drop, include: [Character, { model: Checkpoint, include: [Raid] }] },
+          Character,
+        ],
+        order: [
+          ["itemName", "asc"],
+          [Character, "characterName", "asc"],
+          [Drop, Character, "characterName", "asc"],
+        ],
       })
     );
   } catch (e) {
