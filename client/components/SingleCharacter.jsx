@@ -33,13 +33,12 @@ const styles = theme => ({
 
 class singleCharacter extends Component {
   componentDidMount = () => {
-    if (this.props.status !== LOADED)
-      this.props.getSingleCharacter(this.props.match.params.characterId);
-    if (this.props.singleCharacter.id !== this.props.match.params.characterId)
+    if (
+      this.props.status !== LOADED ||
+      this.props.singleCharacter.id !== this.props.match.params.characterId
+    )
       this.props.getSingleCharacter(this.props.match.params.characterId);
   };
-
-  componentWillUnmount;
 
   render = () => {
     const { classes } = this.props;
@@ -50,9 +49,9 @@ class singleCharacter extends Component {
         return <h1> DOOM </h1>;
       case LOADED:
         return (
-          <Paper className={classes.blueBG}>
-            <SingleCharacterHeader {...this.props} />
-            <Paper>
+          <Paper>
+            <SingleCharacterHeader {...this.props} id="character-gradient" />
+            <Paper className={classes.blueBG}>
               <div className="chart">
                 <SingleCharacterRaidsExpander {...this.props} />
                 <SingleCharacterCheckpointsExpander {...this.props} />

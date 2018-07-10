@@ -46,3 +46,7 @@ form div {
   width: 99%;
   background-color: lightgray;
 }
+
+#character-gradient {
+  background-image: linear-gradient(lightblue, fuchsia);
+}
