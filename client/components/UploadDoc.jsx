@@ -48,7 +48,6 @@ class UploadDoc extends Component {
   };
 
   render = () => {
-    console.log(this.state.confirmation.indexOf(`\n`));
     return (
       <div>
         <Paper>

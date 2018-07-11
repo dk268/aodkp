@@ -35,7 +35,6 @@ const styles = theme => ({
 
 const ItemExpander = props => {
   const { classes, item } = props;
-  console.log(props.item);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

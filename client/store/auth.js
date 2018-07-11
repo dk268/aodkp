@@ -12,7 +12,6 @@ export const login = (userInfo, route) => async dispatch => {
   try {
     dispatch(aF(LOADING_AUTH));
     const currentUser = await Axios.post(`/users/${route}`, userInfo);
-    console.log(currentUser.data);
     switch (currentUser.data.isAdmin) {
       case true:
         dispatch(aF(ADMIN_AUTH), currentUser.data);
@@ -40,9 +39,7 @@ export const me = () => async dispatch => {
   try {
     dispatch(aF(LOADING_AUTH));
     const currentUser = await Axios.get("/users/me");
-    currentUser.data
-      ? dispatch(aF(LOGGED_IN_AUTH, currentUser.data))
-      : dispatch(aF(NO_LOGIN_AUTH));
+    currentUser.data ? dispatch(aF(LOGGED_IN_AUTH, currentUser.data)) : dispatch(aF(NO_LOGIN_AUTH));
     if (currentUser.data.isAdmin) dispatch(aF(ADMIN_AUTH, currentUser.data));
   } catch (e) {
     dispatch(aF(ERROR_AUTH, e));

@@ -1769,7 +1769,6 @@ function (_Component) {
       enumerable: true,
       writable: true,
       value: function value() {
-        console.log(_this.state.confirmation.indexOf("\n"));
         return _react.default.createElement("div", null, _react.default.createElement(_core.Paper, null, _react.default.createElement(_core.Typography, {
           variant: "display3",
           color: "secondary"
@@ -2406,7 +2405,6 @@ var styles = function styles(theme) {
 var ItemExpander = function ItemExpander(props) {
   var classes = props.classes,
       item = props.item;
-  console.log(props.item);
   return _react.default.createElement(_ExpansionPanel.default, null, _react.default.createElement(_ExpansionPanelSummary.default, {
     expandIcon: _react.default.createElement(_ExpandMore.default, null)
   }, _react.default.createElement("div", {
@@ -3327,7 +3325,6 @@ exports.SingleItemDropsExpander = SingleItemDropsExpander;
 var SingleItemCharactersExpander = (0, _styles.withStyles)(styles)(function (props) {
   var singleItem = props.singleItem,
       classes = props.classes;
-  console.log(singleItem);
   return _react.default.createElement(_core.ExpansionPanel, null, _react.default.createElement(_core.ExpansionPanelSummary, {
     expandIcon: _react.default.createElement(_ExpandMore.default, null)
   }, _react.default.createElement("div", {
@@ -3512,7 +3509,6 @@ var SingleRaidDropsExpander = (0, _styles.withStyles)(styles)(function (props) {
       return true;
     }
   });
-  console.log(raidDrops);
   return _react.default.createElement(_core.ExpansionPanel, null, _react.default.createElement(_core.ExpansionPanelSummary, {
     expandIcon: _react.default.createElement(_ExpandMore.default, null)
   }, _react.default.createElement("div", {
@@ -4690,7 +4686,6 @@ var login = function login(userInfo, route) {
 
               case 4:
                 currentUser = _context.sent;
-                console.log(currentUser.data);
 
                 switch (currentUser.data.isAdmin) {
                   case true:
@@ -4703,20 +4698,20 @@ var login = function login(userInfo, route) {
                     dispatch((0, _.aF)(NO_LOGIN_AUTH));
                 }
 
-                _context.next = 12;
+                _context.next = 11;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 8:
+                _context.prev = 8;
                 _context.t0 = _context["catch"](0);
                 dispatch((0, _.aF)(ERROR_CHARACTER, _context.t0));
 
-              case 12:
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 9]]);
+        }, _callee, this, [[0, 8]]);
       }));
 
       return function (_x) {

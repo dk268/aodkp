@@ -157,7 +157,6 @@ export const SingleItemDropsExpander = withStyles(styles)(props => {
 
 export const SingleItemCharactersExpander = withStyles(styles)(props => {
   const { singleItem, classes } = props;
-  console.log(singleItem);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

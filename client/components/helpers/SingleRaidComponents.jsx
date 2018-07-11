@@ -127,7 +127,6 @@ export const SingleRaidDropsExpander = withStyles(styles)(props => {
         return true;
       }
     });
-  console.log(raidDrops);
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

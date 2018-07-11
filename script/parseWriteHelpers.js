@@ -53,7 +53,6 @@ const writeAttendanceToCheckpoints = async (checkpoints, raid, raidObj) => {
 
 const writeItemsToCheckpointsAndCharacters = async (checkpoints, raidObj) => {
   let counter = 0;
-  console.log(raidObj);
   try {
     for (let i = 0; i < checkpoints.length; i++) {
       let currItems = raidObj[checkpoints[i].checkpointName].items;
