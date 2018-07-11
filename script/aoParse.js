@@ -4,7 +4,7 @@ const parseAODoc = doc => {
   const pDoc = doc
     .split(`\n`)
     .map(line => line.trim())
-    .filter(line => line.length);
+    .filter(line => !!line.length);
 
   const raidName = `${pDoc[0]}: ${pDoc[1]}`;
   const itemsIndex = pDoc.indexOf(`<Loot>`);
