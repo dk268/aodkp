@@ -2455,8 +2455,8 @@ var RaidExpander = function RaidExpander(props) {
       return true;
     }
   }).sort(function (characterA, characterB) {
-    if (characterA.characterName < characterB.characterName) return -1;
-    return 1;
+    if (characterA.characterName < characterB.characterName) return -1;else if (characterA.characterName > characterB.characterName) return 1;
+    return 0;
   });
   return _react.default.createElement(_ExpansionPanel.default, null, _react.default.createElement(_ExpansionPanelSummary.default, {
     expandIcon: _react.default.createElement(_ExpandMore.default, null)
@@ -2479,11 +2479,14 @@ var RaidExpander = function RaidExpander(props) {
     return acc.concat(checkpoint.drops);
   }, []).map(function (drop) {
     return _react.default.createElement(_Typography.default, {
-      component: _reactRouterDom.Link,
-      to: "/items/".concat(drop.itemId),
-      className: classes.expanderLink,
       key: "raidItem".concat(drop.id)
-    }, "".concat(drop.dropName, " to ").concat(drop.character.characterName, " for ").concat(drop.dropDKPCost, " DKP"));
+    }, _react.default.createElement(_reactRouterDom.Link, {
+      className: classes.expanderLink,
+      to: "items/".concat(drop.itemId)
+    }, "".concat(drop.dropName)), " to ", " ", _react.default.createElement(_reactRouterDom.Link, {
+      className: classes.expanderLink,
+      to: "/characters/".concat(drop.character.id)
+    }, "".concat(drop.character.characterName)), " for ".concat(drop.dropDKPCost, " DKP"));
   })), _react.default.createElement(_core.List, {
     className: classes.root
   }, _react.default.createElement(_Typography.default, null, "Characters present:", " ", raidAttendance.map(function (character) {

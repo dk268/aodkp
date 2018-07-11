@@ -4,7 +4,7 @@ const parseAODoc = doc => {
   const pDoc = doc
     .split(`\n`)
     .map(line => line.trim())
-    .filter(line => !!line.length);
+    .filter(line => line.length);
 
   const raidName = `${pDoc[0]}: ${pDoc[1]}`;
   const itemsIndex = pDoc.indexOf(`<Loot>`);
@@ -24,11 +24,21 @@ const parseAODoc = doc => {
   const items2200Slice = pDoc.slice(items2200Index + 1, items2300Index);
   const items2300Slice = pDoc.slice(items2300Index + 1, items2400Index);
   const items2400Slice = pDoc.slice(items2400Index + 1, pDoc.indexOf(`<Boxes>`));
-  const attendance2000Slice = pDoc.slice(attendance2000Index + 1, attendance2100Index);
-  const attendance2100Slice = pDoc.slice(attendance2100Index + 1, attendance2200Index);
-  const attendance2200Slice = pDoc.slice(attendance2200Index + 1, attendance2300Index);
-  const attendance2300Slice = pDoc.slice(attendance2300Index + 1, attendance2400Index);
-  const attendance2400Slice = pDoc.slice(attendance2400Index + 1, pDoc.length);
+  const attendance2000Slice = pDoc
+    .slice(attendance2000Index + 1, attendance2100Index)
+    .filter(line => line.includes(`<Ashen Oath>`));
+  const attendance2100Slice = pDoc
+    .slice(attendance2100Index + 1, attendance2200Index)
+    .filter(line => line.includes(`<Ashen Oath>`));
+  const attendance2200Slice = pDoc
+    .slice(attendance2200Index + 1, attendance2300Index)
+    .filter(line => line.includes(`<Ashen Oath>`));
+  const attendance2300Slice = pDoc
+    .slice(attendance2300Index + 1, attendance2400Index)
+    .filter(line => line.includes(`<Ashen Oath>`));
+  const attendance2400Slice = pDoc
+    .slice(attendance2400Index + 1, pDoc.length)
+    .filter(line => line.includes(`<Ashen Oath>`));
   const output = { raidName };
   output[`<2000>`] = {
     items: items2000Slice.map(item => {

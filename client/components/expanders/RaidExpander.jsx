@@ -54,7 +54,8 @@ const RaidExpander = props => {
     })
     .sort((characterA, characterB) => {
       if (characterA.characterName < characterB.characterName) return -1;
-      return 1;
+      else if (characterA.characterName > characterB.characterName) return 1;
+      return 0;
     });
   return (
     <ExpansionPanel>
@@ -84,12 +85,15 @@ const RaidExpander = props => {
           {raid.checkpoints
             .reduce((acc, checkpoint) => acc.concat(checkpoint.drops), [])
             .map(drop => (
-              <Typography
-                component={Link}
-                to={`/items/${drop.itemId}`}
-                className={classes.expanderLink}
-                key={`raidItem${drop.id}`}>
-                {`${drop.dropName} to ${drop.character.characterName} for ${drop.dropDKPCost} DKP`}
+              <Typography key={`raidItem${drop.id}`}>
+                <Link className={classes.expanderLink} to={`items/${drop.itemId}`}>{`${
+                  drop.dropName
+                }`}</Link>
+                {` to `}{" "}
+                <Link className={classes.expanderLink} to={`/characters/${drop.character.id}`}>{`${
+                  drop.character.characterName
+                }`}</Link>
+                {` for ${drop.dropDKPCost} DKP`}
               </Typography>
             ))}
         </Typography>

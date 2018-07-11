@@ -101,7 +101,7 @@ const createString = async raidObj => {
     let charList = "";
     for (let j = 0, k = 0; j < raidObj[cpNames[i]].attendance.sort().length; j++, k++) {
       charList += raidObj[cpNames[i]].attendance[j] + " ";
-      if (k >= 9) {
+      if (k >= 5) {
         charList += "\n";
         k = 0;
       }
