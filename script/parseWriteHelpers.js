@@ -71,7 +71,7 @@ const writeItemsToCheckpointsAndCharacters = async (checkpoints, raidObj) => {
         ),
         await Promise.all(
           currItems.map(item =>
-            Drop.create({ dropName: item.itemName, dropDKPCost: item.itemDKPCost })
+            Drop.create({ dropName: item.itemName, dropDKPCost: item.itemDKPCost || 0 })
           )
         ),
       ]);
