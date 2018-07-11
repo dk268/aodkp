@@ -140,7 +140,7 @@ const createString = async raidObj => {
     } item${pluralizer[num]} will be created.`;
   }
   if (nullValueItems.length) {
-    output = +`\nALSO, the following items were given no dkp value. They will default to zero.\n`;
+    output += `\nALSO, the following items were given no dkp value. They will default to zero.\n`;
     output +=
       nullValueItems
         .map(item => {
