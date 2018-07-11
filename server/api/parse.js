@@ -4,7 +4,6 @@ module.exports = router;
 
 router.get(`/`, async (req, res, next) => {
   try {
-    console.log(req.body);
     res.send("Got it");
   } catch (e) {
     next(e);
@@ -13,9 +12,8 @@ router.get(`/`, async (req, res, next) => {
 
 router.post(`/`, async (req, res, next) => {
   try {
-    console.log(req.body);
-    console.log(confirmAODoc(req.body.document));
-    res.send("Got it via post");
+    const confirmation = await confirmAODoc(req.body.document);
+    res.send(confirmation);
   } catch (e) {
     next(e);
   }

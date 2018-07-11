@@ -20,9 +20,7 @@ class UploadDoc extends Component {
     this.setState({
       flag: true,
     });
-    const parsedReturn = await Axios.get(`/api/parse`);
     const parsedReturn2 = await Axios.post(`/api/parse`, { document: this.state.document });
-    console.log(parsedReturn.data);
     console.log(parsedReturn2.data);
   };
   handleChange = e => {

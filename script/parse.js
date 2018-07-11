@@ -92,7 +92,7 @@ const writeToDatabase = async raidObj => {
   }
 };
 
-const createString = raidObj => {
+const createString = async raidObj => {
   let output = "";
   let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
   for (let i = 0; i < cpNames.length - 1; i++) {
@@ -121,27 +121,52 @@ const createString = raidObj => {
           )
           .join("; and,")}.\n\n`;
   }
+  const [unfoundChars, unfoundItems] = await findNew(raidObj);
+  let pluralizer = [``, `this`, `s`, `these`];
+  if (unfoundChars.length) {
+    let num = 0;
+    if (unfoundChars.length > 1) num += 2;
+    output += `\nNew character${pluralizer[num]} ${unfoundChars.join(
+      ", "
+    )} found. If you proceed, ${pluralizer[1 + num]} character${pluralizer[num]} will be created.`;
+  }
+  if (unfoundItems.length) {
+    let num = 0;
+    if (unfoundItems.length > 1) num += 2;
+    output += `\nNew item${pluralizer[num]} ${unfoundItems.join(", ")} found. If you proceed, ${
+      pluralizer[1 + num]
+    } item${pluralizer[num]} will be created.`;
+  }
   return output;
 };
 
 const findNew = async raidObj => {
   const [extantCharacters, extantItems] = await Promise.all([
-    Array.map.call(Character.findAll(), character => character.characterName),
-    Array.map.call(Item.findAll(), item => item.itemName),
+    Array.prototype.map.call(await Character.findAll(), character => character.characterName),
+    Array.prototype.map.call(await Item.findAll(), item => item.itemName),
   ]);
+  console.log(raidObj);
   let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
-  const charList = [...new Set(cpNames.reduce((acc, cpName) => acc.concat(raidObj[cpName].attendance)))];
   const charSet = new Set(extantCharacters);
-  const unfoundCharacters = [];
+  const itemSet = new Set(extantItems);
+  const unfoundChars = [
+    ...new Set(cpNames.reduce((acc, cpName) => acc.concat(raidObj[cpName].attendance), [])),
+  ].filter(name => !charSet.has(name));
 
-  const unfoundItems = [];
+  const unfoundItems = [
+    ...new Set(cpNames.reduce((acc, cpName) => acc.concat(raidObj[cpName].items), [])),
+  ]
+    .filter(item => !itemSet.has(item.itemName))
+    .map(item => item.itemName);
+  // console.log(extantCharacters);
+  return [unfoundChars, unfoundItems];
 };
 
 // console.log(formatForConfirmation(logToParse));
 // console.log(createString(formatForConfirmation(logToParse)));
 // console.log(createString(parseAODoc(aoDoc)));
 
-const confirmAODoc = doc => createString(parseAODoc(doc));
+const confirmAODoc = async doc => await createString(parseAODoc(doc));
 module.exports = { confirmAODoc, findNew };
 
 // writeToDatabase(formatForConfirmation(logToParse));
