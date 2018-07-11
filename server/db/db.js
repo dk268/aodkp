@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const pkg = require("../../package.json");
-require("../../secrets.js");
+if (process.env.NODE_ENV !== "development") require("../../secrets.js");
 
 const databaseName = pkg.name + (process.env.NODE_ENV === "test" ? "-test" : "");
 
