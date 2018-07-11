@@ -2626,6 +2626,10 @@ var NavbarAdmin = function NavbarAdmin(props) {
   return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Button.default, {
     color: "inherit",
     component: _reactRouterDom.Link,
+    to: "/upload"
+  }, "Upload"), _react.default.createElement(_Button.default, {
+    color: "inherit",
+    component: _reactRouterDom.Link,
     to: "/characters/add"
   }, "Add a Character"), _react.default.createElement(_Button.default, {
     component: _reactRouterDom.Link,
