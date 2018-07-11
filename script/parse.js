@@ -95,6 +95,7 @@ const writeToDatabase = async raidObj => {
 
 const createString = async raidObj => {
   let output = "";
+  const nullValueItems = [];
   let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
   for (let i = 0; i < cpNames.length - 1; i++) {
     let charList = "";
@@ -114,10 +115,12 @@ const createString = async raidObj => {
       : `\n...and the following ${raidObj[cpNames[i]].items.length} items dropped: ${raidObj[
           cpNames[i]
         ].items
-          .map(
-            item =>
-              `\n-- ${item.itemName}; went to ${item.characterName} for ${item.itemDKPCost} DKP`
-          )
+          .map(item => {
+            if (item.itemDKPCost === null) nullValueItems.push(item);
+            return `\n-- ${item.itemName}; went to ${item.characterName} for ${
+              item.itemDKPCost
+            } DKP`;
+          })
           .join("; and,")}.\n\n`;
   }
   const [unfoundChars, unfoundItems] = await findNew(raidObj);
@@ -136,6 +139,17 @@ const createString = async raidObj => {
       pluralizer[1 + num]
     } item${pluralizer[num]} will be created.`;
   }
+  if (nullValueItems.length) {
+    output = +`\nALSO, the following items were given no dkp value. They will default to zero.\n`;
+    output +=
+      nullValueItems
+        .map(item => {
+          if (item.characterName === "rot" || item.characterName === "Rot") {
+            return `${item.itemName} rotted`;
+          } else return `${item.itemName} went to ${item.characterName}`;
+        })
+        .join(`; `) + `.`;
+  }
   return output;
 };
 
@@ -150,7 +164,6 @@ const findNew = async raidObj => {
   const unfoundChars = [
     ...new Set(cpNames.reduce((acc, cpName) => acc.concat(raidObj[cpName].attendance), [])),
   ].filter(name => !charSet.has(name));
-
   const unfoundItems = [
     ...new Set(cpNames.reduce((acc, cpName) => acc.concat(raidObj[cpName].items), [])),
   ]
