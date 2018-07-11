@@ -1,5 +1,11 @@
 import React, { Component, Fragment } from "react";
-import { Typography, Paper, TextField, Button } from "../../node_modules/@material-ui/core";
+import {
+  Typography,
+  Paper,
+  TextField,
+  Button,
+  CircularProgress,
+} from "../../node_modules/@material-ui/core";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getCharacters } from "../store/allCharacters";
@@ -13,6 +19,7 @@ class UploadDoc extends Component {
       document: ``,
       flag: false,
       confirmation: ``,
+      confirmed: false,
     };
   }
   componentDidMount = () => {};
@@ -33,6 +40,9 @@ class UploadDoc extends Component {
     });
   };
   writeToDatabase = async e => {
+    this.setState({
+      confirmed: true,
+    });
     const newRaid = await Axios.post(`/api/parse/confirm`, { document: this.state.document });
     this.props.history.push(`/raids/${newRaid.data.id}`);
   };
@@ -63,9 +73,13 @@ class UploadDoc extends Component {
         {this.state.flag ? (
           <Fragment>
             <h6 style={{ whiteSpace: `pre-line` }}>{this.state.confirmation}</h6>
-            <Button variant="contained" color="secondary" onClick={this.writeToDatabase}>
-              Confirm
-            </Button>
+            {this.state.confirmed ? (
+              <Dotter />
+            ) : (
+              <Button variant="contained" color="secondary" onClick={this.writeToDatabase}>
+                Confirm
+              </Button>
+            )}
           </Fragment>
         ) : (
           ""
@@ -84,11 +98,29 @@ const mapDispatchToProps = { getCharacters, getItems };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UploadDoc));
 
-// const ConfirmationText = props => {
-//   return (
-//     <Fragment>
-//       <Typography variant="display4"> Confirmation </Typography>
-//       <p>{props.confirmation}</p>
-//     </Fragment>
-//   );
-// };
+class Dotter extends Component {
+  state = { counter: 1 };
+  componentDidMount = () => {
+    window.setInterval(
+      () =>
+        this.setState({
+          counter: this.state.counter + 1,
+        }),
+      400
+    );
+  };
+
+  createDots = count => {
+    let output = ".";
+    for (let i = 0; i < count; i++) {
+      output += ".";
+    }
+    return output;
+  };
+
+  componentWillUnmount = () => {
+    window.clearInterval();
+  };
+
+  render = () => <h3>{`Creating raid${this.createDots(this.state.counter)}`}</h3>;
+}

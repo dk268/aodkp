@@ -1737,17 +1737,21 @@ function (_Component) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  _context2.next = 2;
+                  _this.setState({
+                    confirmed: true
+                  });
+
+                  _context2.next = 3;
                   return _axios.default.post("/api/parse/confirm", {
                     document: _this.state.document
                   });
 
-                case 2:
+                case 3:
                   newRaid = _context2.sent;
 
                   _this.props.history.push("/raids/".concat(newRaid.data.id));
 
-                case 4:
+                case 5:
                 case "end":
                   return _context2.stop();
               }
@@ -1786,7 +1790,7 @@ function (_Component) {
           style: {
             whiteSpace: "pre-line"
           }
-        }, _this.state.confirmation), _react.default.createElement(_core.Button, {
+        }, _this.state.confirmation), _this.state.confirmed ? _react.default.createElement(Dotter, null) : _react.default.createElement(_core.Button, {
           variant: "contained",
           color: "secondary",
           onClick: _this.writeToDatabase
@@ -1796,7 +1800,8 @@ function (_Component) {
     _this.state = {
       document: "",
       flag: false,
-      confirmation: ""
+      confirmation: "",
+      confirmed: false
     };
     return _this;
   }
@@ -1816,17 +1821,76 @@ var mapDispatchToProps = {
   getItems: _allItems.getItems
 };
 
-var _default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UploadDoc)); // const ConfirmationText = props => {
-//   return (
-//     <Fragment>
-//       <Typography variant="display4"> Confirmation </Typography>
-//       <p>{props.confirmation}</p>
-//     </Fragment>
-//   );
-// };
-
+var _default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UploadDoc));
 
 exports.default = _default;
+
+var Dotter =
+/*#__PURE__*/
+function (_Component2) {
+  _inherits(Dotter, _Component2);
+
+  function Dotter() {
+    var _ref;
+
+    var _temp, _this2;
+
+    _classCallCheck(this, Dotter);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this2, (_temp = _this2 = _possibleConstructorReturn(this, (_ref = Dotter.__proto__ || Object.getPrototypeOf(Dotter)).call.apply(_ref, [this].concat(args))), Object.defineProperty(_assertThisInitialized(_this2), "state", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: {
+        counter: 1
+      }
+    }), Object.defineProperty(_assertThisInitialized(_this2), "componentDidMount", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function value() {
+        window.setInterval(function () {
+          return _this2.setState({
+            counter: _this2.state.counter + 1
+          });
+        }, 400);
+      }
+    }), Object.defineProperty(_assertThisInitialized(_this2), "createDots", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function value(count) {
+        var output = ".";
+
+        for (var i = 0; i < count; i++) {
+          output += ".";
+        }
+
+        return output;
+      }
+    }), Object.defineProperty(_assertThisInitialized(_this2), "componentWillUnmount", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function value() {
+        window.clearInterval();
+      }
+    }), Object.defineProperty(_assertThisInitialized(_this2), "render", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function value() {
+        return _react.default.createElement("h3", null, "Creating raid".concat(_this2.createDots(_this2.state.counter)));
+      }
+    }), _temp));
+  }
+
+  return Dotter;
+}(_react.Component);
 
 /***/ }),
 

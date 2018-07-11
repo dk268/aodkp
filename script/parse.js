@@ -97,7 +97,7 @@ const createString = async raidObj => {
   let output = "";
   const nullValueItems = [];
   let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
-  for (let i = 0; i < cpNames.length - 1; i++) {
+  for (let i = 0; i < cpNames.length; i++) {
     let charList = "";
     for (let j = 0, k = 0; j < raidObj[cpNames[i]].attendance.sort().length; j++, k++) {
       charList += raidObj[cpNames[i]].attendance[j] + " ";
@@ -128,19 +128,19 @@ const createString = async raidObj => {
   if (unfoundChars.length) {
     let num = 0;
     if (unfoundChars.length > 1) num += 2;
-    output += `\nNew character${pluralizer[num]} ${unfoundChars.join(
+    output += `\n\nNew character${pluralizer[num]} ${unfoundChars.join(
       ", "
     )} found. If you proceed, ${pluralizer[1 + num]} character${pluralizer[num]} will be created.`;
   }
   if (unfoundItems.length) {
     let num = 0;
     if (unfoundItems.length > 1) num += 2;
-    output += `\nNew item${pluralizer[num]} ${unfoundItems.join(", ")} found. If you proceed, ${
+    output += `\n\nNew item${pluralizer[num]} ${unfoundItems.join(", ")} found. If you proceed, ${
       pluralizer[1 + num]
     } item${pluralizer[num]} will be created.`;
   }
   if (nullValueItems.length) {
-    output += `\nALSO, the following items were given no dkp value. They will default to zero.\n`;
+    output += `\n\n****ALSO****, the following items were given no dkp value. They will default to zero.\n`;
     output +=
       nullValueItems
         .map(item => {
