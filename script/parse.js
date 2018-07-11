@@ -84,6 +84,7 @@ const writeToDatabase = async raidObj => {
     console.log(chalk.red.bold(`Beginning item writing and DKP expenditures...`));
     await writeItemsToCheckpointsAndCharacters(newCheckpoints, raidObj);
     console.log(chalk.magenta(`All done in ${Date.now() - now}ms!!`));
+    return newRaid;
   } catch (e) {
     console.log(e);
   } finally {
@@ -115,9 +116,7 @@ const createString = async raidObj => {
         ].items
           .map(
             item =>
-              `\nitem name: ${item.itemName}; went to ${item.characterName} for ${
-                item.itemDKPCost
-              } DKP`
+              `\n-- ${item.itemName}; went to ${item.characterName} for ${item.itemDKPCost} DKP`
           )
           .join("; and,")}.\n\n`;
   }
@@ -145,7 +144,6 @@ const findNew = async raidObj => {
     Array.prototype.map.call(await Character.findAll(), character => character.characterName),
     Array.prototype.map.call(await Item.findAll(), item => item.itemName),
   ]);
-  console.log(raidObj);
   let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
   const charSet = new Set(extantCharacters);
   const itemSet = new Set(extantItems);
@@ -167,7 +165,8 @@ const findNew = async raidObj => {
 // console.log(createString(parseAODoc(aoDoc)));
 
 const confirmAODoc = async doc => await createString(parseAODoc(doc));
-module.exports = { confirmAODoc, findNew };
+const writeAODoc = async doc => await writeToDatabase(parseAODoc(doc));
+module.exports = { confirmAODoc, findNew, writeAODoc };
 
 // writeToDatabase(formatForConfirmation(logToParse));
 // console.log(parseAODoc(aoDoc));
