@@ -16,6 +16,7 @@ import SingleDrop from "./components/SingleDrop";
 import SingleItem from "./components/SingleItem";
 import SingleRaid from "./components/SingleRaid";
 import UploadDoc from "./components/UploadDoc";
+import FormCharacter from "./components/FormCharacter";
 
 /**
  * COMPONENT
@@ -49,6 +50,7 @@ class Routes extends Component {
         <Route exact path="/drops" component={AllDrops} />
         <Route exact path="/items" component={AllItems} />
         <Route exact path="/raids" component={AllRaids} />
+        <Route exact path="/characters/edit/:characterId" component={FormCharacter} />
         <Route exact path="/characters/:characterId" component={SingleCharacter} />
         <Route exact path="/checkpoints/:checkpointId" component={SingleCheckpoint} />
         <Route exact path="/drops/:dropId" component={SingleDrop} />

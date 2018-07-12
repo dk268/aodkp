@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { Character, Checkpoint, Item, Raid, Drop } = require("../db/models");
+const Sequelize = require("../db/db");
 
 const NOUN = "checkpoint";
 

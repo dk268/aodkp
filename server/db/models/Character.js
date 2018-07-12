@@ -14,6 +14,10 @@ const Character = db.define("character", {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
+  altOf: {
+    type: Sequelize.STRING,
+    defaultValue: null,
+  },
   class: {
     type: Sequelize.STRING,
     defaultValue: null,
