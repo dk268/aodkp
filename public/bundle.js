@@ -897,7 +897,13 @@ function (_Component) {
       enumerable: true,
       writable: true,
       value: {
-        singleCharacter: {}
+        singleCharacter: {},
+        characterName: "",
+        dkp: "",
+        isAlt: false,
+        altOf: "",
+        class: "",
+        isAltChecked: _this.props.singleCharacter.isAlt
       }
     }), Object.defineProperty(_assertThisInitialized(_this), "componentDidMount", {
       configurable: true,
@@ -932,6 +938,19 @@ function (_Component) {
           return _value.apply(this, arguments);
         };
       }()
+    }), Object.defineProperty(_assertThisInitialized(_this), "handleSwap", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function value(name) {
+        return function (e) {
+          _this.setState(_defineProperty({}, name, e.target.checked));
+
+          _this.setState({
+            isAlt: !_this.state.isAlt
+          });
+        };
+      }
     }), Object.defineProperty(_assertThisInitialized(_this), "handleChange", {
       configurable: true,
       enumerable: true,
@@ -943,7 +962,10 @@ function (_Component) {
       configurable: true,
       enumerable: true,
       writable: true,
-      value: function value(e) {}
+      value: function value(e) {
+        e.preventDefault();
+        console.log(_this.state, Math.floor(_this.state.dkp));
+      }
     }), Object.defineProperty(_assertThisInitialized(_this), "render", {
       configurable: true,
       enumerable: true,
@@ -970,7 +992,8 @@ function (_Component) {
               label: "Character Name",
               className: classes.textField,
               placeholder: "Character Name",
-              value: _this.state.characterName,
+              value: _this.state.characterName || "" // defaultValue="Character Name..."
+              ,
               name: "characterName",
               onChange: _this.handleChange,
               required: true
@@ -978,25 +1001,36 @@ function (_Component) {
               label: "Character DKP",
               className: classes.textField,
               placeholder: "DKP",
-              value: _this.state.dkp,
+              value: _this.state.dkp || "",
               name: "dkp",
-              type: "number",
-              onChange: _this.handleChange,
-              required: true
-            }), _react.default.createElement(_core.Switch, {
-              checked: _this.state.isAlt,
-              onChange: _this.handleChange // value={this.state.isAlt}
+              type: "number" // defaultValue="0"
               ,
-              name: "isAlt",
-              label: "is alt?"
+              onChange: _this.handleChange
+            }), _react.default.createElement(_core.Switch, {
+              checked: _this.state.isAltChecked,
+              onChange: _this.handleSwap("isAltChecked"),
+              value: "isAltChecked"
             }), _this.state.isAlt ? _react.default.createElement(_core.TextField, {
-              label: "Character DKP",
+              label: "alt of?",
               className: classes.textField,
               placeholder: "alt of",
-              value: _this.state.altOf,
-              name: "altOf",
+              value: _this.state.altOf || "",
+              name: "altOf" // defaultValue={this.state.altOf ? "alt of" : ""}
+              ,
               onChange: _this.handleChange
-            }) : ""));
+            }) : "Is alt?", _react.default.createElement(_core.TextField, {
+              label: "Character Class",
+              className: classes.textField,
+              placeholder: "Class",
+              value: _this.state.class || "",
+              name: "class" // defaultValue={this.state.class ? "Adventurer" : ""}
+              ,
+              onChange: _this.handleChange
+            })), _react.default.createElement(_core.Button, {
+              type: "submit",
+              variant: "contained",
+              color: "secondary"
+            }, "Submit"));
 
           default:
             return _react.default.createElement("h1", null, " hit DEFAULT ");

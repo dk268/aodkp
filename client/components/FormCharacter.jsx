@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { LOADING, LOADED, ERROR } from "../store";
-import { TextField, withStyles, Button, Switch } from "@material-ui/core";
+import { TextField, withStyles, Button, Switch, Typography } from "@material-ui/core";
 import { getSingleCharacter } from "../store/singleCharacter";
 import CircularIndeterminate from "./loaders/CircularIndeterminate";
 
@@ -30,9 +30,24 @@ const styles = theme => ({
 });
 
 class FormCharacter extends Component {
-  state = { singleCharacter: {} };
+  state = {
+    singleCharacter: {},
+    characterName: "",
+    dkp: ``,
+    isAlt: false,
+    altOf: "",
+    class: "",
+    isAltChecked: this.props.singleCharacter.isAlt,
+  };
   componentDidMount = async () => {
     this.setState(await this.props.getSingleCharacter(this.props.match.params.characterId));
+  };
+
+  handleSwap = name => e => {
+    this.setState({ [name]: e.target.checked });
+    this.setState({
+      isAlt: !this.state.isAlt,
+    });
   };
   handleChange = e => {
     this.setState({
@@ -40,7 +55,10 @@ class FormCharacter extends Component {
     });
   };
 
-  handleSubmit = e => {};
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log(this.state, Math.floor(this.state.dkp));
+  };
 
   render = () => {
     const { classes } = this.props;
@@ -57,7 +75,7 @@ class FormCharacter extends Component {
                 label="Character Name"
                 className={classes.textField}
                 placeholder="Character Name"
-                value={this.state.characterName}
+                value={this.state.characterName || ""}
                 name="characterName"
                 onChange={this.handleChange}
                 required
@@ -66,32 +84,40 @@ class FormCharacter extends Component {
                 label="Character DKP"
                 className={classes.textField}
                 placeholder="DKP"
-                value={this.state.dkp}
+                value={this.state.dkp || ""}
                 name="dkp"
                 type="number"
                 onChange={this.handleChange}
-                required
               />
               <Switch
-                checked={this.state.isAlt}
-                onChange={this.handleChange}
-                // value={this.state.isAlt}
-                name="isAlt"
-                label="is alt?"
+                checked={this.state.isAltChecked}
+                onChange={this.handleSwap("isAltChecked")}
+                value="isAltChecked"
               />
               {this.state.isAlt ? (
                 <TextField
-                  label="Character DKP"
+                  label="alt of?"
                   className={classes.textField}
                   placeholder="alt of"
-                  value={this.state.altOf}
+                  value={this.state.altOf || ""}
                   name="altOf"
                   onChange={this.handleChange}
                 />
               ) : (
-                ""
+                `Is alt?`
               )}
+              <TextField
+                label="Character Class"
+                className={classes.textField}
+                placeholder="Class"
+                value={this.state.class || ""}
+                name="class"
+                onChange={this.handleChange}
+              />
             </div>
+            <Button type="submit" variant="contained" color="secondary">
+              Submit
+            </Button>
           </form>
         );
       default:
