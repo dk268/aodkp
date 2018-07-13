@@ -32,8 +32,10 @@ const Item = db.define(
   {
     hooks: {
       afterFind: item => {
-        item.associatedCharacters = item.characters ? item.characters : "not found";
-        item.associatedDrops = item.drops ? item.drops : "not found";
+        if (item) {
+          item.associatedCharacters = item.characters ? item.characters : "not found";
+          item.associatedDrops = item.drops ? item.drops : "not found";
+        }
       },
     },
   }

@@ -52,11 +52,13 @@ const Character = db.define(
   {
     hooks: {
       afterFind: character => {
-        character.associatedDrops = checkpoint.drops ? checkpoint.drops : "not found";
-        character.associatedCheckpoints = checkpoint.checkpoints
-          ? checkpoint.checkpoints
-          : "not found";
-        character.associatedItems = checkpoint.items ? checkpoint.items : "not found";
+        if (character) {
+          character.associatedDrops = character.drops ? character.drops : "not found";
+          character.associatedCheckpoints = character.checkpoints
+            ? character.checkpoints
+            : "not found";
+          character.associatedItems = character.items ? character.items : "not found";
+        }
       },
     },
   }
