@@ -903,7 +903,8 @@ function (_Component) {
         isAlt: false,
         altOf: "",
         class: "",
-        isAltChecked: _this.props.singleCharacter.isAlt
+        isAltChecked: _this.props.singleCharacter.isAlt,
+        id: _this.props.match.params.characterId
       }
     }), Object.defineProperty(_assertThisInitialized(_this), "componentDidMount", {
       configurable: true,
@@ -962,10 +963,36 @@ function (_Component) {
       configurable: true,
       enumerable: true,
       writable: true,
-      value: function value(e) {
-        e.preventDefault();
-        console.log(_this.state, Math.floor(_this.state.dkp));
-      }
+      value: function () {
+        var _value2 = _asyncToGenerator(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee2(e) {
+          var changedChar;
+          return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  e.preventDefault();
+                  _context2.next = 3;
+                  return _this.props.editCharacter(_this.state);
+
+                case 3:
+                  changedChar = _context2.sent;
+
+                  _this.props.history.push("/characters/".concat(changedChar.id));
+
+                case 5:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, this);
+        }));
+
+        return function value(_x) {
+          return _value2.apply(this, arguments);
+        };
+      }()
     }), Object.defineProperty(_assertThisInitialized(_this), "render", {
       configurable: true,
       enumerable: true,
@@ -992,8 +1019,7 @@ function (_Component) {
               label: "Character Name",
               className: classes.textField,
               placeholder: "Character Name",
-              value: _this.state.characterName || "" // defaultValue="Character Name..."
-              ,
+              value: _this.state.characterName || "",
               name: "characterName",
               onChange: _this.handleChange,
               required: true
@@ -1003,8 +1029,7 @@ function (_Component) {
               placeholder: "DKP",
               value: _this.state.dkp || "",
               name: "dkp",
-              type: "number" // defaultValue="0"
-              ,
+              type: "number",
               onChange: _this.handleChange
             }), _react.default.createElement(_core.Switch, {
               checked: _this.state.isAltChecked,
@@ -1015,16 +1040,14 @@ function (_Component) {
               className: classes.textField,
               placeholder: "alt of",
               value: _this.state.altOf || "",
-              name: "altOf" // defaultValue={this.state.altOf ? "alt of" : ""}
-              ,
+              name: "altOf",
               onChange: _this.handleChange
             }) : "Is alt?", _react.default.createElement(_core.TextField, {
               label: "Character Class",
               className: classes.textField,
               placeholder: "Class",
               value: _this.state.class || "",
-              name: "class" // defaultValue={this.state.class ? "Adventurer" : ""}
-              ,
+              name: "class",
               onChange: _this.handleChange
             })), _react.default.createElement(_core.Button, {
               type: "submit",
@@ -1050,7 +1073,8 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = {
-  getSingleCharacter: _singleCharacter.getSingleCharacter
+  getSingleCharacter: _singleCharacter.getSingleCharacter,
+  editCharacter: _singleCharacter.editCharacter
 };
 FormCharacter.propTypes = {
   classes: _propTypes.default.object.isRequired
@@ -5388,7 +5412,7 @@ var singleCharacter = function singleCharacter() {
 
     case EDIT_CHARACTER:
       return _extends({}, state, {
-        status: _.LOADED,
+        status: _.LOADING,
         collection: action.payload
       });
 
