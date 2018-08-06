@@ -1,18 +1,20 @@
 const router = require("express").Router();
-const { Character, Checkpoint, Item, Raid } = require("../db/models");
+const { Character, Item, Drop, Checkpoint, Raid } = require("../db/models");
 
 const NOUN = "item";
-const OTHER_MODELS = [Character, Checkpoint, Item].filter(model => model !== Item);
 
 router.get(`/`, async (req, res, next) => {
   try {
     res.json(
       await Item.findAll({
-        include: [{ all: true, nested: true }],
+        include: [
+          { model: Drop, include: [Character, { model: Checkpoint, include: [Raid, Drop] }] },
+          Character,
+        ],
         order: [
           ["itemName", "asc"],
           [Character, "characterName", "asc"],
-          [Checkpoint, "id", "asc"],
+          [Drop, Character, "characterName", "asc"],
         ],
       })
     );
@@ -25,7 +27,15 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
       await Item.findById(req.params[`${NOUN}Id`], {
-        include: [{ all: true, nested: true }],
+        include: [
+          { model: Drop, include: [Character, { model: Checkpoint, include: [Raid, Drop] }] },
+          Character,
+        ],
+        order: [
+          ["itemName", "asc"],
+          [Character, "characterName", "asc"],
+          [Drop, Character, "characterName", "asc"],
+        ],
       })
     );
   } catch (e) {

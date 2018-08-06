@@ -1,14 +1,17 @@
 const router = require("express").Router();
-const { Character, Checkpoint, Item, Raid } = require("../db/models");
+const { Character, Checkpoint, Item, Drop, Raid } = require("../db/models");
 const NOUN = "character";
-const OTHER_MODELS = [Character, Checkpoint, Item].filter(model => model !== Character);
 
 router.get(`/`, async (req, res, next) => {
   try {
     res.json(
       await Character.findAll({
-        order: [["characterName", "asc"], [Item, "itemName", "ASC"]],
-        include: [{ all: true, nested: true }],
+        include: [
+          { model: Drop, include: [Item, Checkpoint] },
+          { model: Checkpoint, include: [Raid] },
+          { model: Item, include: [Drop] },
+        ],
+        order: [["characterName", "asc"], [Drop, "dropName", "ASC"]],
       })
     );
   } catch (e) {
@@ -20,7 +23,12 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
       await Character.findById(req.params[`${NOUN}Id`], {
-        include: [{ all: true, nested: true }],
+        include: [
+          { model: Drop, include: [Item, Checkpoint] },
+          { model: Checkpoint, include: [Raid] },
+          { model: Item, include: [Drop] },
+        ],
+        order: [["characterName", "asc"], [Drop, "dropName", "ASC"]],
       })
     );
   } catch (e) {
@@ -38,15 +46,14 @@ router.post("/", async (req, res, next) => {
 
 router.put(`/:${NOUN}Id`, async (req, res, next) => {
   try {
-    res.json(
-      await Character.update(req.body, {
-        where: {
-          id: req.params[`${NOUN}Id`],
-        },
-        returning: true,
-        plain: true,
-      })[1][0]
-    );
+    const [, updatedCharacter] = await Character.update(req.body, {
+      where: {
+        id: req.params[`${NOUN}Id`],
+      },
+      returning: true,
+      plain: true,
+    });
+    res.json(updatedCharacter);
   } catch (e) {
     next(e);
   }

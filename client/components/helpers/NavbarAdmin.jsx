@@ -27,6 +27,9 @@ const NavbarAdmin = props => {
   const { handleClick, classes, isLoggedIn } = props;
   return (
     <Fragment>
+      <Button color="inherit" component={Link} to="/upload">
+        Upload
+      </Button>
       <Button color="inherit" component={Link} to="/characters/add">
         Add a Character
       </Button>
@@ -41,6 +44,9 @@ const NavbarAdmin = props => {
       </Button>
       <Button component={Link} to="/checkpoints" color="inherit">
         Checkpoints
+      </Button>
+      <Button component={Link} to="/drops" color="inherit">
+        Drops
       </Button>
     </Fragment>
   );

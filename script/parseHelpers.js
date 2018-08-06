@@ -80,7 +80,7 @@ const parseDropDoc = (str, checkpointName) => {
   return {
     itemName: parsedStr[0].trim(),
     characterName: parsedStr[1].split(" ")[0].trim(),
-    itemDKPCost: parsedStr[1].split(" ")[1].trim(),
+    itemDKPCost: parsedStr[1].split(" ")[1] ? parsedStr[1].split(" ")[1].trim() : null,
     checkpointName,
   };
 };

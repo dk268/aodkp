@@ -3,25 +3,29 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Expander from "./expanders/Expander";
 import { connect } from "react-redux";
-import { getRaids } from "../store/allRaids";
+import { getDrops } from "../store/allDrops";
 import { LOADING, LOADED, ERROR } from "../store";
 import LinearIndeterminate from "./loaders/LinearIndeterminate";
 import { Paper } from "@material-ui/core";
 
 const styles = theme => ({
+  blueBG: {
+    width: "100%",
+    backgroundColor: `lightblue`,
+  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
 });
 
-class AllRaids extends Component {
+class AllDrops extends Component {
   componentDidMount = () => {
-    if (this.props.status !== LOADED) this.props.getRaids();
+    if (this.props.status !== LOADED) this.props.getDrops();
   };
 
   render = () => {
-    const { classes, allRaids } = this.props;
+    const { classes, allDrops } = this.props;
     switch (this.props.status) {
       case LOADING:
         return <LinearIndeterminate />;
@@ -29,10 +33,10 @@ class AllRaids extends Component {
         return <h1> DOOM </h1>;
       case LOADED:
         return (
-          <Paper>
-            <div className="chart gray-bg">
-              {allRaids.map(raid => {
-                return <Expander {...this.props} key={raid.id} modelName="Raid" raid={raid} />;
+          <Paper className={classes.blueBG}>
+            <div className="chart">
+              {allDrops.map(drop => {
+                return <Expander {...this.props} key={drop.id} modelName="Drop" drop={drop} />;
               })}
             </div>
           </Paper>
@@ -48,12 +52,12 @@ Expander.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  status: state.allRaids.status,
-  allRaids: state.allRaids.collection,
+  status: state.allDrops.status,
+  allDrops: state.allDrops.collection,
 });
 
 const mapDispatchToProps = {
-  getRaids,
+  getDrops,
 };
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(AllRaids));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(AllDrops));

@@ -28,3 +28,25 @@ form div {
 .bolded {
   font-weight: bold;
 }
+
+.chart {
+  width: 99%;
+  margin: 0 auto;
+  background-color: lightgray;
+}
+
+.margin-10-indent {
+  margin: 0 10%;
+}
+.margin-5-indent {
+  margin: 0 5%;
+}
+
+.gray-bg {
+  width: 99%;
+  background-color: lightgray;
+}
+
+#character-gradient {
+  background-image: linear-gradient(lightblue, fuchsia);
+}

@@ -5,10 +5,32 @@ import PropTypes from "prop-types";
 import { Login, Signup, UserHome, Landing } from "./components";
 import { me } from "./store";
 import AllCharacters from "./components/AllCharacters";
+import AllCheckpoints from "./components/AllCheckpoints";
+import { withStyles } from "@material-ui/core";
+import AllDrops from "./components/AllDrops";
+import AllItems from "./components/AllItems";
+import AllRaids from "./components/AllRaids";
+import SingleCharacter from "./components/SingleCharacter";
+import SingleCheckpoint from "./components/SingleCheckpoint";
+import SingleDrop from "./components/SingleDrop";
+import SingleItem from "./components/SingleItem";
+import SingleRaid from "./components/SingleRaid";
+import UploadDoc from "./components/UploadDoc";
+import FormCharacter from "./components/FormCharacter";
 
 /**
  * COMPONENT
  */
+
+const newStyles = {
+  whiteCard: {},
+  chart: {},
+  grayBG: {},
+  typographies: {},
+  expanderLink: {},
+  bolded: {},
+};
+
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
@@ -24,21 +46,17 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/" component={Landing} />
         <Route exact path="/characters" component={AllCharacters} />
-        {/* <Route exact path="/items" component={AllItems} /> */}
-        {/* <Route exact path="/raids" component={AllRaids} /> */}
-        {/* <Route exact path="/checkpoints" component={AllCheckpoints} /> */}
-        {/* <Route
-          exact
-          path="/characters/:characterId"
-          component={SingleCharacter}
-        /> */}
-        {/* <Route exact path="/items/:itemId" component={SingleItem} /> */}
-        {/* <Route exact path="/raids/:raidId" component={SingleRaid} /> */}
-        {/* <Route
-          exact
-          path="/checkpoints/:checkpointId"
-          component={SingleCheckpoint}
-        /> */}
+        <Route exact path="/checkpoints" component={AllCheckpoints} />
+        <Route exact path="/drops" component={AllDrops} />
+        <Route exact path="/items" component={AllItems} />
+        <Route exact path="/raids" component={AllRaids} />
+        <Route exact path="/characters/edit/:characterId" component={FormCharacter} />
+        <Route exact path="/characters/:characterId" component={SingleCharacter} />
+        <Route exact path="/checkpoints/:checkpointId" component={SingleCheckpoint} />
+        <Route exact path="/drops/:dropId" component={SingleDrop} />
+        <Route exact path="/items/:itemId" component={SingleItem} />
+        <Route exact path="/raids/:raidId" component={SingleRaid} />
+        <Route exact path="/upload" component={UploadDoc} />
         {/*isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in }
@@ -73,7 +91,8 @@ const mapDispatch = dispatch => {
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Routes));
+
+export default withStyles(newStyles)(withRouter(connect(mapState, mapDispatch)(Routes)));
 
 /**
  * PROP TYPES

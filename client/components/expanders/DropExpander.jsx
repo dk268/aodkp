@@ -5,8 +5,8 @@ import { withStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const styles = theme => ({
   whiteCard: {
@@ -22,7 +22,7 @@ const styles = theme => ({
   typographies: {
     display: `flex`,
     justifyContent: `space-around`,
-    maxWidth: `70%`,
+    maxWidth: `90%`,
   },
   expanderLink: {
     color: `darkblue`,
@@ -33,8 +33,8 @@ const styles = theme => ({
   },
 });
 
-const CharacterExpander = props => {
-  const { classes, character } = props;
+const DropExpander = props => {
+  const { classes, drop } = props;
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -42,25 +42,41 @@ const CharacterExpander = props => {
           <Typography
             className={`${classes.heading} ${classes.expanderLink}`}
             component={Link}
-            to={`/characters/${character.id}`}>
-            {character.characterName}
+            to={`/items/${drop.itemId}`}>
+            {drop.dropName}
           </Typography>
-          <Typography>{character.dkp} dkp</Typography>
         </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.typographies}>
-        <Typography>Attendance: 200%</Typography>
-        <Typography>class: {character.class}</Typography>
-        <Typography>DKP spent: {character.totalDKPSpent}</Typography>
-        <Typography>DKP earned: {character.totalDKPEarned}</Typography>
-        <Typography className={classes.bolded}>{!character.isAlt ? `Main` : `Alt`}</Typography>
+        <Typography>
+          Character awarded:{" "}
+          <Link className={classes.expanderLink} to={`/characters/${drop.associatedCharacter.id}`}>
+            {" "}
+            {drop.associatedCharacter.characterName}{" "}
+          </Link>
+        </Typography>
+        <Typography>DKP cost: {drop.dropDKPCost}</Typography>
+        <Typography>
+          Raid acquired:{" "}
+          <Link className={classes.expanderLink} to={`/raids/${drop.checkpoint.raid.id}`}>
+            {" "}
+            {drop.checkpoint.raid.raidName}{" "}
+          </Link>
+        </Typography>
+        <Typography>
+          {" "}
+          Specific drop:{" "}
+          <Link className={classes.expanderLink} to={`/drops/${drop.id}`}>
+            (link)
+          </Link>
+        </Typography>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
 };
 
-CharacterExpander.propTypes = {
+DropExpander.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(CharacterExpander));
+export default withRouter(withStyles(styles)(DropExpander));

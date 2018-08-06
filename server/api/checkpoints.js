@@ -1,15 +1,19 @@
 const router = require("express").Router();
-const { Character, Checkpoint, Item, Raid } = require("../db/models");
+const { Character, Checkpoint, Item, Raid, Drop } = require("../db/models");
+const Sequelize = require("../db/db");
 
 const NOUN = "checkpoint";
-const OTHER_MODELS = [Character, Checkpoint, Item, Raid].filter(model => model !== Checkpoint);
 
 router.get(`/`, async (req, res, next) => {
   try {
     res.json(
       await Checkpoint.findAll({
-        include: [{ all: true, nested: true }],
-        order: [["id", "asc"], [Character, "characterName", "asc"], [Item, "itemName", "asc"]],
+        include: [
+          { model: Drop, include: [Character, Item] },
+          { model: Character },
+          { model: Raid },
+        ],
+        order: [["id", "asc"], [Character, "characterName", "asc"], [Drop, "dropName", "asc"]],
       })
     );
   } catch (e) {
@@ -21,7 +25,12 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
       await Checkpoint.findById(req.params[`${NOUN}Id`], {
-        include: [{ all: true, nested: true }],
+        include: [
+          { model: Drop, include: [Character, Item] },
+          { model: Character },
+          { model: Raid },
+        ],
+        order: [["id", "asc"], [Character, "characterName", "asc"], [Drop, "dropName", "asc"]],
       })
     );
   } catch (e) {

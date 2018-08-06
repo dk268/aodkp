@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Expander from "./expanders/Expander";
 import { connect } from "react-redux";
 import { getCharacters } from "../store/allCharacters";
@@ -14,18 +9,9 @@ import LinearIndeterminate from "./loaders/LinearIndeterminate";
 import { Paper } from "@material-ui/core";
 
 const styles = theme => ({
-  grayBG: {
-    width: "100%",
-    backgroundColor: `lightgray`,
-  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
-  },
-  chart: {
-    width: `99%`,
-    margin: `0 auto`,
-    backgroundColor: `white`,
   },
 });
 
@@ -43,8 +29,8 @@ class AllCharacters extends Component {
         return <h1> DOOM </h1>;
       case LOADED:
         return (
-          <Paper className={classes.grayBG}>
-            <div className={classes.chart}>
+          <Paper>
+            <div className="chart gray-bg">
               {allCharacters.map(character => {
                 return (
                   <Expander

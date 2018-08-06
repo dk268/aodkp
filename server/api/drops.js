@@ -1,22 +1,17 @@
 const router = require("express").Router();
 const { Character, Checkpoint, Drop, Item, Raid } = require("../db/models");
 
-const NOUN = "raid";
+const NOUN = "drop";
 
 router.get(`/`, async (req, res, next) => {
   try {
     res.json(
-      await Raid.findAll({
-        include: [
-          {
-            model: Checkpoint,
-            include: [{ model: Drop, include: [Character, Item, Checkpoint] }, Character],
-          },
-        ],
+      await Drop.findAll({
+        include: [Character, Item, { model: Checkpoint, include: [Raid] }],
         order: [
-          ["id", "asc"],
+          ["dropName", "asc"],
+          [Character, "characterName", "asc"],
           [Checkpoint, "id", "asc"],
-          [Checkpoint, Character, "characterName", "asc"],
         ],
       })
     );
@@ -28,18 +23,8 @@ router.get(`/`, async (req, res, next) => {
 router.get(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
-      await Raid.findById(req.params[`${NOUN}Id`], {
-        include: [
-          {
-            model: Checkpoint,
-            include: [{ model: Drop, include: [Character, Item, Checkpoint] }, Character],
-          },
-        ],
-        order: [
-          ["id", "asc"],
-          [Checkpoint, "id", "asc"],
-          [Checkpoint, Character, "characterName", "asc"],
-        ],
+      await Drop.findById(req.params[`${NOUN}Id`], {
+        include: [Character, Item, { model: Checkpoint, include: [Raid] }],
       })
     );
   } catch (e) {
@@ -49,7 +34,7 @@ router.get(`/:${NOUN}Id`, async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    res.json(await Raid.create(req.body));
+    res.json(await Drop.create(req.body));
   } catch (e) {
     next(e);
   }
@@ -58,7 +43,7 @@ router.post("/", async (req, res, next) => {
 router.put(`/:${NOUN}Id`, async (req, res, next) => {
   try {
     res.json(
-      await Raid.update(req.body, {
+      await Drop.update(req.body, {
         where: {
           id: req.params[`${NOUN}Id`],
         },
@@ -73,8 +58,8 @@ router.put(`/:${NOUN}Id`, async (req, res, next) => {
 
 router.delete(`/:${NOUN}Id`, async (req, res, next) => {
   try {
-    await Raid.destroy({ where: { id: req.params.charId } });
-    const remaining = await Raid.findAll();
+    await Drop.destroy({ where: { id: req.params.charId } });
+    const remaining = await Drop.findAll();
     res.json(remaining);
   } catch (e) {
     next(e);

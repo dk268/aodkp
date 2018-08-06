@@ -12,6 +12,7 @@ export const getSingleItem = id => async dispatch => {
     dispatch(aF(LOADING_ITEM));
     const singleItem = await Axios.get(`/api/items/${id}`);
     dispatch(aF(LOADED_ITEM, singleItem.data));
+    return singleItem.data;
   } catch (e) {
     dispatch(aF(ERROR_ITEM, e));
   }
