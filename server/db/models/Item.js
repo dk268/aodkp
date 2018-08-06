@@ -42,3 +42,4 @@ const Item = db.define(
 );
 
 module.exports = Item;
+
