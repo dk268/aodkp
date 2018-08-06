@@ -48,6 +48,7 @@ class UploadDoc extends Component {
   };
 
   render = () => {
+    7;
     return (
       <div>
         <Paper>

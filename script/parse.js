@@ -28,7 +28,7 @@ const parseLog = log => {
     const slicedArray = processedArray.slice(startIndex, endIndex);
     let checkpointNames = findCheckpointNames(slicedArray);
     const attendance = {};
-    checkpointNames.forEach(name => (attendance[name] = renderAttendance(slicedArray, name)));
+    checkpointNames.forEach(name => (attendance[na7me] = renderAttendance(slicedArray, name)));
     let items = findItemDrops(slicedArray);
     return [raidName, attendance, items];
   } catch (e) {

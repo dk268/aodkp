@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import React from "react";
+import React, { Fragment } from "react";
 
 const styles = theme => ({
   blueBG: {
@@ -107,13 +107,20 @@ export const SingleCharacterCheckpointsExpander = withStyles(styles)(props => {
       <ExpansionPanelDetails>
         <List className={classes.root}>
           {singleCharacter.checkpoints.map(checkpoint => (
-            <Typography
-              key={checkpoint.id}
-              component={Link}
-              to={`/checkpoints/${checkpoint.id}`}
-              className={classes.expanderLink}>
-              {checkpoint.checkpointName}
-            </Typography>
+            <Fragment key={checkpoint.id}>
+              <Typography
+                component={Link}
+                to={`/checkpoints/${checkpoint.id}`}
+                className={classes.expanderLink}>
+                {checkpoint.checkpointName}
+              </Typography>
+              <Typography
+                component={Link}
+                to={`/raids/${checkpoint.raid.id}`}
+                className={classes.expanderLink}>
+                {checkpoint.raid.raidName}{" "}
+              </Typography>
+            </Fragment>
           ))}
         </List>
       </ExpansionPanelDetails>
