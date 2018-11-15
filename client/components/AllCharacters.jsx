@@ -65,10 +65,22 @@ class AllCharacters extends Component {
 }
 
 const filterByThirtyDays = raid => {
-  console.log(raid.raidDate, Date.now() - raid.raidDate < 2622000000);
-  if (!raid.raidDate) return false;
-  if (Date.now() - raid.raidDate < 3622000000) return true;
+  // console.log(raid.raidDate);
+  let milliseconds;
+  if (raid.raidDate) {
+    milliseconds = new Date(raid.raidDate).getTime();
+    return Date.now() - milliseconds < 3622000000;
+  }
   return false;
+
+  // console.log(
+  //   raid.raidDate,
+  //   raid.raidDate && raid.raidDate.getTime(),
+  //   raid.raidDate && Date.now() - raid.raidDate.getTime()
+  // );
+  // if (!raid.raidDate) return false;
+  // if (Date.now() - raid.raidDate && raid.raidDate.getTime() < 3622000000) return true;
+  // return false;
 };
 
 Expander.propTypes = {
