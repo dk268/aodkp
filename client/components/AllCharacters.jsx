@@ -68,7 +68,7 @@ const filterByThirtyDays = raid => {
   let milliseconds;
   if (raid.raidDate) {
     milliseconds = new Date(raid.raidDate).getTime();
-    return Date.now() - milliseconds < 3622000000;
+    return Date.now() - milliseconds < 2622000000;
   }
   return false;
 };

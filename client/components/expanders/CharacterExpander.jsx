@@ -43,7 +43,7 @@ const CharacterExpander = props => {
       let milliseconds;
       if (checkpoint.raid && checkpoint.raid.raidDate) {
         milliseconds = new Date(checkpoint.raid.raidDate).getTime();
-        return Date.now() - milliseconds < 3622000000;
+        return Date.now() - milliseconds < 2622000000;
       }
       return false;
     }).length;
