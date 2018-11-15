@@ -42,13 +42,13 @@ const CharacterExpander = props => {
     characterCheckpoints = character.checkpoints.filter(checkpoint => {
       let milliseconds;
       if (checkpoint.raid && checkpoint.raid.raidDate) {
-        milliseconds = new Date(raid.raidDate).getTime();
+        milliseconds = new Date(checkpoint.raid.raidDate).getTime();
         return Date.now() - milliseconds < 3622000000;
       }
       return false;
     }).length;
   }
-  // console.log(characterCheckpoints, characterCheckpoints / totalCheckpoints);
+  console.log(characterCheckpoints, characterCheckpoints / totalCheckpoints);
 
   return (
     <ExpansionPanel>
@@ -65,7 +65,7 @@ const CharacterExpander = props => {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.typographies}>
         <Typography>
-          {characterCheckpoints && totalCheckpoints
+          {characterCheckpoints / totalCheckpoints
             ? Math.floor(characterCheckpoints * 10000 / totalCheckpoints) / 100 + `%`
             : `unavailable`}
         </Typography>
