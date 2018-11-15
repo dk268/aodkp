@@ -40,8 +40,11 @@ const CharacterExpander = props => {
   // console.log(totalCheckpoints);
   if (character.checkpoints.length) {
     characterCheckpoints = character.checkpoints.filter(checkpoint => {
-      if (!checkpoint.raid || !checkpoint.raid.raidDate) return false;
-      if (Date.now() - checkpoint.raid.raidDate < 2622000000) return true;
+      let milliseconds;
+      if (checkpoint.raid && checkpoint.raid.raidDate) {
+        milliseconds = new Date(raid.raidDate).getTime();
+        return Date.now() - milliseconds < 3622000000;
+      }
       return false;
     }).length;
   }
