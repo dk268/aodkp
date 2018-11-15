@@ -45,7 +45,18 @@ const styles = theme => ({
 });
 
 export const SingleCharacterHeader = props => {
-  const { singleCharacter } = props;
+  const { singleCharacter, totalCheckpoints } = props;
+  let characterCheckpoints = 0;
+  if (singleCharacter.checkpoints.length) {
+    singleCharacterCheckpoints = singleCharacter.checkpoints.filter(checkpoint => {
+      let milliseconds;
+      if (checkpoint.raid && checkpoint.raid.raidDate) {
+        milliseconds = new Date(checkpoint.raid.raidDate).getTime();
+        return Date.now() - milliseconds < 2622000000;
+      }
+      return false;
+    }).length;
+  }
   return (
     <Paper>
       <Typography variant="display3" color="secondary">
@@ -53,7 +64,12 @@ export const SingleCharacterHeader = props => {
       </Typography>
       <div className="margin-10-indent">
         <Typography variant="display1">{`DKP: ${singleCharacter.dkp}`}</Typography>
-        <Typography variant="display1">Attendance: ~~</Typography>
+        <Typography variant="display1">
+          30d attendance:{" "}
+          {characterCheckpoints / totalCheckpoints
+            ? Math.floor(characterCheckpoints * 10000 / totalCheckpoints) / 100 + `%`
+            : `unavailable`}
+        </Typography>
         <Typography variant="display1">Class: {`${singleCharacter.class}`}</Typography>
         {singleCharacter.isAlt ? <Typography variant="title">Alt</Typography> : ""}
       </div>
