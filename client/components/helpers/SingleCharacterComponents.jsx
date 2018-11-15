@@ -48,7 +48,7 @@ export const SingleCharacterHeader = props => {
   const { singleCharacter, totalCheckpoints } = props;
   let characterCheckpoints = 0;
   if (singleCharacter.checkpoints.length) {
-    singleCharacterCheckpoints = singleCharacter.checkpoints.filter(checkpoint => {
+    characterCheckpoints = singleCharacter.checkpoints.filter(checkpoint => {
       let milliseconds;
       if (checkpoint.raid && checkpoint.raid.raidDate) {
         milliseconds = new Date(checkpoint.raid.raidDate).getTime();
