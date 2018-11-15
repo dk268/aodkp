@@ -125,7 +125,7 @@ const createString = async raidObj => {
           })
           .join("; and,")}.\n\n`;
   }
-  const [unfoundChars, unfoundItems] = await findNew(raidObj);
+  const [unfoundChars, unfoundItems, newRaidDateBool] = await findNew(raidObj);
   let pluralizer = [``, `this`, `s`, `these`];
   if (unfoundChars.length) {
     let num = 0;
@@ -152,17 +152,21 @@ const createString = async raidObj => {
         })
         .join(`; `) + `.`;
   }
+  if (newRaidDateBool)
+    output += `\n\nA raid already exists with this date. Are you sure you want to proceed?`;
   return output;
 };
 
 const findNew = async raidObj => {
-  const [extantCharacters, extantItems] = await Promise.all([
+  const [extantCharacters, extantItems, extantRaidDates] = await Promise.all([
     Array.prototype.map.call(await Character.findAll(), character => character.characterName),
     Array.prototype.map.call(await Item.findAll(), item => item.itemName),
+    Array.prototype.map.call(await Raid.findAll(), raid => raid.raidName.split(" ")[2]),
   ]);
   let cpNames = Object.keys(raidObj).filter(name => name !== `raidName` && name !== `raidDate`);
   const charSet = new Set(extantCharacters);
   const itemSet = new Set(extantItems);
+  const raidDateSet = new Set(extantRaidDates);
   const unfoundChars = [
     ...new Set(cpNames.reduce((acc, cpName) => acc.concat(raidObj[cpName].attendance), [])),
   ].filter(name => !charSet.has(name));
@@ -171,8 +175,9 @@ const findNew = async raidObj => {
   ]
     .filter(item => !itemSet.has(item.itemName))
     .map(item => item.itemName);
-  // console.log(extantCharacters);
-  return [unfoundChars, unfoundItems];
+  const newRaidDateBool = raidDateSet.has(raidObj.raidDate);
+  console.log(extantRaidDates, raidDateSet, raidObj.raidDate, newRaidDateBool);
+  return [unfoundChars, unfoundItems, newRaidDateBool];
 };
 
 // console.log(formatForConfirmation(logToParse));
