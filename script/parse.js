@@ -65,8 +65,10 @@ const writeToDatabase = async raidObj => {
     let now = Date.now();
     console.log(chalk.bold("Starting write..."));
     console.log(chalk.red(`creating checkpoints and raid...`));
-    const checkpointNames = Object.keys(raidObj).filter(key => key !== `raidName`);
-    const newRaid = await Raid.create({ raidName: raidObj.raidName });
+    const checkpointNames = Object.keys(raidObj).filter(
+      key => key !== `raidName` && key !== `raidDate`
+    );
+    const newRaid = await Raid.create({ raidName: raidObj.raidName, raidDate: raidObj.raidDate });
     let newCheckpoints = await createCheckpointsWithRaid(checkpointNames, newRaid);
     console.log(
       chalk.blue(`created ${newCheckpoints.length} checkpoints for raid ${newRaid.raidName}!`)
@@ -96,7 +98,7 @@ const writeToDatabase = async raidObj => {
 const createString = async raidObj => {
   let output = "";
   const nullValueItems = [];
-  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
+  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName` && name !== `raidDate`);
   for (let i = 0; i < cpNames.length; i++) {
     let charList = "";
     for (let j = 0, k = 0; j < raidObj[cpNames[i]].attendance.sort().length; j++, k++) {
@@ -158,7 +160,7 @@ const findNew = async raidObj => {
     Array.prototype.map.call(await Character.findAll(), character => character.characterName),
     Array.prototype.map.call(await Item.findAll(), item => item.itemName),
   ]);
-  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
+  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName` && name !== `raidDate`);
   const charSet = new Set(extantCharacters);
   const itemSet = new Set(extantItems);
   const unfoundChars = [
