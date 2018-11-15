@@ -65,7 +65,7 @@ const CharacterExpander = props => {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.typographies}>
         <Typography>
-          30d attendance:
+          30d attendance:{" "}
           {characterCheckpoints / totalCheckpoints
             ? Math.floor(characterCheckpoints * 10000 / totalCheckpoints) / 100 + `%`
             : `unavailable`}
