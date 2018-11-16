@@ -153,7 +153,7 @@ const createString = async raidObj => {
         .join(`; `) + `.`;
   }
   if (newRaidDateBool)
-    output += `\n\nA raid already exists with this date. Are you sure you want to proceed?`;
+    output += `\n\nA raid already exists with this date. This raid has likely already been entered.\nAre you sure you want to proceed?`;
   return output;
 };
 
