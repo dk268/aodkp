@@ -15,7 +15,6 @@ import {
   SingleCharacterCheckpointsExpander,
   SingleCharacterDropsExpander,
 } from "./helpers/SingleCharacterComponents";
-import { getRaids } from "../store/allRaids";
 
 const styles = theme => ({
   blueBG: {
@@ -35,20 +34,10 @@ class SingleCharacter extends Component {
       this.props.singleCharacter.id !== this.props.match.params.characterId
     )
       this.props.getSingleCharacter(this.props.match.params.characterId);
-    if (!this.props.raidStatus) this.props.getRaids();
   };
 
   render = () => {
-    const { classes, raidStatus, allRaids } = this.props;
-    let totalCheckpoints = 0;
-    if (raidStatus === LOADED) {
-      if (allRaids.length) {
-        const filteredRaids = allRaids.filter(raid => filterByThirtyDays(raid));
-        for (let i = 0; i < filteredRaids.length; i++) {
-          totalCheckpoints += filteredRaids[i].checkpoints.length;
-        }
-      }
-    }
+    const { classes } = this.props;
     switch (this.props.status) {
       case LOADING:
         return <CircularIndeterminate />;
@@ -57,11 +46,7 @@ class SingleCharacter extends Component {
       case LOADED:
         return (
           <Paper>
-            <SingleCharacterHeader
-              {...this.props}
-              totalCheckpoints={totalCheckpoints}
-              id="character-gradient"
-            />
+            <SingleCharacterHeader {...this.props} id="character-gradient" />
             <Paper className={classes.blueBG}>
               <div className="chart">
                 <SingleCharacterRaidsExpander {...this.props} />
@@ -81,26 +66,15 @@ Expander.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const filterByThirtyDays = raid => {
-  let milliseconds;
-  if (raid.raidDate) {
-    milliseconds = new Date(raid.raidDate).getTime();
-    return Date.now() - milliseconds < 2622000000;
-  }
-  return false;
-};
-
 const mapStateToProps = state => ({
   status: state.singleCharacter.status,
   singleCharacter: state.singleCharacter.collection,
-  raidStatus: state.allRaids.status,
-  allRaids: state.allRaids.collection,
 });
 
 const mapDispatchToProps = {
   getSingleCharacter,
-  getRaids,
 };
+
 export default withStyles(styles)(
   withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleCharacter))
 );

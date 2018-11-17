@@ -28,7 +28,7 @@ const parseLog = log => {
     const slicedArray = processedArray.slice(startIndex, endIndex);
     let checkpointNames = findCheckpointNames(slicedArray);
     const attendance = {};
-    checkpointNames.forEach(name => (attendance[na7me] = renderAttendance(slicedArray, name)));
+    checkpointNames.forEach(name => (attendance[name] = renderAttendance(slicedArray, name)));
     let items = findItemDrops(slicedArray);
     return [raidName, attendance, items];
   } catch (e) {
@@ -65,10 +65,8 @@ const writeToDatabase = async raidObj => {
     let now = Date.now();
     console.log(chalk.bold("Starting write..."));
     console.log(chalk.red(`creating checkpoints and raid...`));
-    const checkpointNames = Object.keys(raidObj).filter(
-      key => key !== `raidName` && key !== `raidDate`
-    );
-    const newRaid = await Raid.create({ raidName: raidObj.raidName, raidDate: raidObj.raidDate });
+    const checkpointNames = Object.keys(raidObj).filter(key => key !== `raidName`);
+    const newRaid = await Raid.create({ raidName: raidObj.raidName });
     let newCheckpoints = await createCheckpointsWithRaid(checkpointNames, newRaid);
     console.log(
       chalk.blue(`created ${newCheckpoints.length} checkpoints for raid ${newRaid.raidName}!`)
@@ -98,7 +96,7 @@ const writeToDatabase = async raidObj => {
 const createString = async raidObj => {
   let output = "";
   const nullValueItems = [];
-  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName` && name !== `raidDate`);
+  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
   for (let i = 0; i < cpNames.length; i++) {
     let charList = "";
     for (let j = 0, k = 0; j < raidObj[cpNames[i]].attendance.sort().length; j++, k++) {
@@ -125,7 +123,7 @@ const createString = async raidObj => {
           })
           .join("; and,")}.\n\n`;
   }
-  const [unfoundChars, unfoundItems, newRaidDateBool] = await findNew(raidObj);
+  const [unfoundChars, unfoundItems] = await findNew(raidObj);
   let pluralizer = [``, `this`, `s`, `these`];
   if (unfoundChars.length) {
     let num = 0;
@@ -152,21 +150,17 @@ const createString = async raidObj => {
         })
         .join(`; `) + `.`;
   }
-  if (newRaidDateBool)
-    output += `\n\nA raid already exists with this date. This raid has likely already been entered.\nAre you sure you want to proceed?`;
   return output;
 };
 
 const findNew = async raidObj => {
-  const [extantCharacters, extantItems, extantRaidDates] = await Promise.all([
+  const [extantCharacters, extantItems] = await Promise.all([
     Array.prototype.map.call(await Character.findAll(), character => character.characterName),
     Array.prototype.map.call(await Item.findAll(), item => item.itemName),
-    Array.prototype.map.call(await Raid.findAll(), raid => raid.raidName.split(" ")[2]),
   ]);
-  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName` && name !== `raidDate`);
+  let cpNames = Object.keys(raidObj).filter(name => name !== `raidName`);
   const charSet = new Set(extantCharacters);
   const itemSet = new Set(extantItems);
-  const raidDateSet = new Set(extantRaidDates);
   const unfoundChars = [
     ...new Set(cpNames.reduce((acc, cpName) => acc.concat(raidObj[cpName].attendance), [])),
   ].filter(name => !charSet.has(name));
@@ -175,9 +169,8 @@ const findNew = async raidObj => {
   ]
     .filter(item => !itemSet.has(item.itemName))
     .map(item => item.itemName);
-  const newRaidDateBool = raidDateSet.has(raidObj.raidDate);
-  console.log(extantRaidDates, raidDateSet, raidObj.raidDate, newRaidDateBool);
-  return [unfoundChars, unfoundItems, newRaidDateBool];
+  // console.log(extantCharacters);
+  return [unfoundChars, unfoundItems];
 };
 
 // console.log(formatForConfirmation(logToParse));

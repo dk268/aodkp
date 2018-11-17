@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import React, { Fragment } from "react";
+import React from "react";
 
 const styles = theme => ({
   blueBG: {
@@ -45,18 +45,7 @@ const styles = theme => ({
 });
 
 export const SingleCharacterHeader = props => {
-  const { singleCharacter, totalCheckpoints } = props;
-  let characterCheckpoints = 0;
-  if (singleCharacter.checkpoints.length) {
-    characterCheckpoints = singleCharacter.checkpoints.filter(checkpoint => {
-      let milliseconds;
-      if (checkpoint.raid && checkpoint.raid.raidDate) {
-        milliseconds = new Date(checkpoint.raid.raidDate).getTime();
-        return Date.now() - milliseconds < 2622000000;
-      }
-      return false;
-    }).length;
-  }
+  const { singleCharacter } = props;
   return (
     <Paper>
       <Typography variant="display3" color="secondary">
@@ -64,12 +53,7 @@ export const SingleCharacterHeader = props => {
       </Typography>
       <div className="margin-10-indent">
         <Typography variant="display1">{`DKP: ${singleCharacter.dkp}`}</Typography>
-        <Typography variant="display1">
-          30d attendance:{" "}
-          {characterCheckpoints / totalCheckpoints
-            ? Math.floor(characterCheckpoints * 10000 / totalCheckpoints) / 100 + `%`
-            : `unavailable`}
-        </Typography>
+        <Typography variant="display1">Attendance: ~~</Typography>
         <Typography variant="display1">Class: {`${singleCharacter.class}`}</Typography>
         {singleCharacter.isAlt ? <Typography variant="title">Alt</Typography> : ""}
       </div>
@@ -123,20 +107,13 @@ export const SingleCharacterCheckpointsExpander = withStyles(styles)(props => {
       <ExpansionPanelDetails>
         <List className={classes.root}>
           {singleCharacter.checkpoints.map(checkpoint => (
-            <Fragment key={checkpoint.id}>
-              <Typography
-                component={Link}
-                to={`/checkpoints/${checkpoint.id}`}
-                className={classes.expanderLink}>
-                {checkpoint.checkpointName}
-              </Typography>
-              <Typography
-                component={Link}
-                to={`/raids/${checkpoint.raid.id}`}
-                className={classes.expanderLink}>
-                {checkpoint.raid.raidName}{" "}
-              </Typography>
-            </Fragment>
+            <Typography
+              key={checkpoint.id}
+              component={Link}
+              to={`/checkpoints/${checkpoint.id}`}
+              className={classes.expanderLink}>
+              {checkpoint.checkpointName}
+            </Typography>
           ))}
         </List>
       </ExpansionPanelDetails>

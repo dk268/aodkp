@@ -82,24 +82,20 @@ const RaidExpander = props => {
         </Typography>
         <Typography>
           Raid drops:{" "}
-          {raid.checkpoints.length
-            ? raid.checkpoints
-                .reduce((acc, checkpoint) => acc.concat(checkpoint.drops), [])
-                .map(drop => (
-                  <Typography key={`raidItem${drop.id}`}>
-                    <Link className={classes.expanderLink} to={`items/${drop.itemId}`}>{`${
-                      drop.dropName
-                    }`}</Link>
-                    {` to `}{" "}
-                    <Link
-                      className={classes.expanderLink}
-                      to={`/characters/${drop.character.id}`}>{`${
-                      drop.character.characterName
-                    }`}</Link>
-                    {` for ${drop.dropDKPCost} DKP`}
-                  </Typography>
-                ))
-            : ""}
+          {raid.checkpoints
+            .reduce((acc, checkpoint) => acc.concat(checkpoint.drops), [])
+            .map(drop => (
+              <Typography key={`raidItem${drop.id}`}>
+                <Link className={classes.expanderLink} to={`items/${drop.itemId}`}>{`${
+                  drop.dropName
+                }`}</Link>
+                {` to `}{" "}
+                <Link className={classes.expanderLink} to={`/characters/${drop.character.id}`}>{`${
+                  drop.character.characterName
+                }`}</Link>
+                {` for ${drop.dropDKPCost} DKP`}
+              </Typography>
+            ))}
         </Typography>
         <List className={classes.root}>
           <Typography>

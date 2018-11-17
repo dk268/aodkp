@@ -17,7 +17,6 @@ router.post(`/confirm`, async (req, res, next) => {
 
 router.post(`/`, async (req, res, next) => {
   try {
-    console.log("Hi!");
     const confirmation = await confirmAODoc(req.body.document);
     res.send(confirmation);
   } catch (e) {

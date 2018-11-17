@@ -52,7 +52,7 @@ const CheckpointExpander = props => {
             to={`/checkpoints/${checkpoint.id}`}>
             {checkpoint.checkpointName}
           </Typography>
-          <Typography>{checkpoint.raid ? checkpoint.raid.raidName : ""}</Typography>
+          <Typography>{checkpoint.raid.raidName}</Typography>
           <Typography>Adds {checkpoint.checkpointDKP} dkp</Typography>
         </div>
       </ExpansionPanelSummary>

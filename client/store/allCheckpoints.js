@@ -13,8 +13,6 @@ export const getCheckpoints = () => async dispatch => {
     dispatch(aF(LOADING_CHECKPOINTS));
     const allCheckpoints = await Axios.get(`/api/checkpoints`);
     dispatch(aF(LOADED_CHECKPOINTS, allCheckpoints.data));
-    console.log("cllaed", allCheckpoints.data, `rip`);
-    console.log(getRaidDate(allCheckpoints.data[1].raid.raidDate));
   } catch (e) {
     dispatch(aF(ERROR_CHECKPOINTS, e));
   }
@@ -45,11 +43,6 @@ const allCheckpoints = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-const getRaidDate = dateStr => {
-  const dateArr = dateStr.split(`/`);
-  return new Date(dateArr[2] * 1, dateArr[0] * 1 - 1, dateArr[1]);
 };
 
 export default allCheckpoints;
