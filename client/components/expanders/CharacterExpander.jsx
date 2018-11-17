@@ -34,7 +34,22 @@ const styles = theme => ({
 });
 
 const CharacterExpander = props => {
-  const { classes, character } = props;
+  const { classes, character, totalCheckpoints } = props;
+  let characterCheckpoints = 0;
+  // console.log("character . checkpoints", character.checkpoints);
+  // console.log(totalCheckpoints);
+  if (character.checkpoints.length) {
+    characterCheckpoints = character.checkpoints.filter(checkpoint => {
+      let milliseconds;
+      if (checkpoint.raid && checkpoint.raid.raidDate) {
+        milliseconds = new Date(checkpoint.raid.raidDate).getTime();
+        return Date.now() - milliseconds < 2622000000;
+      }
+      return false;
+    }).length;
+  }
+  console.log(characterCheckpoints, characterCheckpoints / totalCheckpoints);
+
   return (
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -49,8 +64,13 @@ const CharacterExpander = props => {
         </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.typographies}>
-        <Typography>Attendance: 200%</Typography>
-        <Typography>class: {character.class}</Typography>
+        <Typography>
+          30d attendance:{" "}
+          {characterCheckpoints / totalCheckpoints
+            ? Math.floor(characterCheckpoints * 10000 / totalCheckpoints) / 100 + `%`
+            : `unavailable`}
+        </Typography>
+        <Typography>class: {character.class ? character.class : `not specified`}</Typography>
         <Typography>DKP spent: {character.totalDKPSpent}</Typography>
         <Typography>DKP earned: {character.totalDKPEarned}</Typography>
         <Typography className={classes.bolded}>{!character.isAlt ? `Main` : `Alt`}</Typography>
