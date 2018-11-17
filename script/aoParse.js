@@ -7,7 +7,6 @@ const parseAODoc = doc => {
     .filter(line => line.length);
 
   const raidName = `${pDoc[0]}: ${pDoc[1]}`;
-  const raidDate = pDoc[1];
   const itemsIndex = pDoc.indexOf(`<Loot>`);
   const items2000Index = pDoc.indexOf(`<2000>`);
   const items2100Index = pDoc.indexOf(`<2100>`);
@@ -40,7 +39,7 @@ const parseAODoc = doc => {
   const attendance2400Slice = pDoc
     .slice(attendance2400Index + 1, pDoc.length)
     .filter(line => line.includes(`<Ashen Oath>`));
-  const output = { raidName, raidDate };
+  const output = { raidName };
   output[`<2000>`] = {
     items: items2000Slice.map(item => {
       return parseDropDoc(item, `<2000>`);

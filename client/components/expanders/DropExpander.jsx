@@ -50,9 +50,9 @@ const DropExpander = props => {
       <ExpansionPanelDetails className={classes.typographies}>
         <Typography>
           Character awarded:{" "}
-          <Link className={classes.expanderLink} to={`/characters/${drop.associatedCharacter.id}`}>
+          <Link className={classes.expanderLink} to={`/characters/${drop.character.id}`}>
             {" "}
-            {drop.associatedCharacter.characterName}{" "}
+            {drop.character.characterName}{" "}
           </Link>
         </Typography>
         <Typography>DKP cost: {drop.dropDKPCost}</Typography>

@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { LOADING, LOADED, ERROR } from "../store";
 import { TextField, withStyles, Button, Switch, Typography } from "@material-ui/core";
-import { getSingleCharacter, editCharacter } from "../store/singleCharacter";
+import { getSingleCharacter } from "../store/singleCharacter";
 import CircularIndeterminate from "./loaders/CircularIndeterminate";
 
 const styles = theme => ({
@@ -33,12 +33,11 @@ class FormCharacter extends Component {
   state = {
     singleCharacter: {},
     characterName: "",
-    dkp: "",
+    dkp: ``,
     isAlt: false,
     altOf: "",
     class: "",
     isAltChecked: this.props.singleCharacter.isAlt,
-    id: this.props.match.params.characterId,
   };
   componentDidMount = async () => {
     this.setState(await this.props.getSingleCharacter(this.props.match.params.characterId));
@@ -56,10 +55,9 @@ class FormCharacter extends Component {
     });
   };
 
-  handleSubmit = async e => {
+  handleSubmit = e => {
     e.preventDefault();
-    const changedChar = await this.props.editCharacter(this.state);
-    this.props.history.push(`/characters/${changedChar.id}`);
+    console.log(this.state, Math.floor(this.state.dkp));
   };
 
   render = () => {
@@ -133,7 +131,7 @@ const mapStateToProps = state => ({
   status: state.singleCharacter.status,
 });
 
-const mapDispatchToProps = { getSingleCharacter, editCharacter };
+const mapDispatchToProps = { getSingleCharacter };
 
 FormCharacter.propTypes = {
   classes: PropTypes.object.isRequired,
