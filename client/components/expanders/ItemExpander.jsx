@@ -39,7 +39,11 @@ const ItemExpander = props => {
     <ExpansionPanel>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.grayCard}>
-          <Typography className={classes.heading} component={Link} to={`/items/${item.id}`}>
+          <Typography
+            className={classes.heading}
+            component={Link}
+            className={classes.expanderLink}
+            to={`/items/${item.id}`}>
             {item.itemName}
           </Typography>
         </div>

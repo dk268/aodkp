@@ -21,10 +21,7 @@ export const getSingleCharacter = id => async dispatch => {
 export const editCharacter = characterData => async dispatch => {
   try {
     dispatch(aF(LOADING_CHARACTER));
-    const singleCharacter = await Axios.put(
-      `/api/characters/${characterData.id}`,
-      characterData
-    );
+    const singleCharacter = await Axios.put(`/api/characters/${characterData.id}`, characterData);
     dispatch(aF(EDIT_CHARACTER, singleCharacter.data));
     return singleCharacter.data;
   } catch (e) {
@@ -41,7 +38,7 @@ const singleCharacter = (state = initialState, action) => {
     case LOADED_CHARACTER:
       return { ...state, status: LOADED, collection: action.payload };
     case EDIT_CHARACTER:
-      return { ...state, status: LOADED, collection: action.payload };
+      return { ...state, status: LOADING, collection: action.payload };
     case ERROR_CHARACTER:
       return { ...state, status: ERROR };
     default:

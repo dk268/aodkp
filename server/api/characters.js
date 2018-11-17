@@ -46,15 +46,14 @@ router.post("/", async (req, res, next) => {
 
 router.put(`/:${NOUN}Id`, async (req, res, next) => {
   try {
-    res.json(
-      await Character.update(req.body, {
-        where: {
-          id: req.params[`${NOUN}Id`],
-        },
-        returning: true,
-        plain: true,
-      })[1][0]
-    );
+    const [, updatedCharacter] = await Character.update(req.body, {
+      where: {
+        id: req.params[`${NOUN}Id`],
+      },
+      returning: true,
+      plain: true,
+    });
+    res.json(updatedCharacter);
   } catch (e) {
     next(e);
   }

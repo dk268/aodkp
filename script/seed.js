@@ -1,7 +1,7 @@
 "use strict";
 
 const db = require("../server/db");
-const { User } = require("../server/db/models");
+const { User, Character, Item, Raid, Drop, Checkpoint } = require("../server/db/models");
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -26,6 +26,14 @@ async function seed() {
   ]);
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
+  await Promise.all([
+    Character.create({ characterName: "Loner" }),
+    Item.create({ itemName: "Loneitem" }),
+    Raid.create({ raidName: "SoloRaid" }),
+    Checkpoint.create({ checkpointName: "SoloCheckpoint" }),
+    Drop.create({ dropName: "SoloDrop" }),
+  ]);
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
 }
